@@ -13970,10 +13970,6 @@ type VirtualServiceSpecHttpCorsPolicy struct {
 	ExposeHeaders []string `pulumi:"exposeHeaders"`
 	// Specifies how long the results of a preflight request can be cached.
 	MaxAge *string `pulumi:"maxAge"`
-	// Indicates whether preflight requests not matching the configured allowed origin shouldn't be forwarded to the upstream.
-	//
-	// Valid Options: FORWARD, IGNORE
-	UnmatchedPreflights *string `pulumi:"unmatchedPreflights"`
 }
 
 // VirtualServiceSpecHttpCorsPolicyInput is an input type that accepts VirtualServiceSpecHttpCorsPolicyArgs and VirtualServiceSpecHttpCorsPolicyOutput values.
@@ -14002,10 +13998,6 @@ type VirtualServiceSpecHttpCorsPolicyArgs struct {
 	ExposeHeaders pulumi.StringArrayInput `pulumi:"exposeHeaders"`
 	// Specifies how long the results of a preflight request can be cached.
 	MaxAge pulumi.StringPtrInput `pulumi:"maxAge"`
-	// Indicates whether preflight requests not matching the configured allowed origin shouldn't be forwarded to the upstream.
-	//
-	// Valid Options: FORWARD, IGNORE
-	UnmatchedPreflights pulumi.StringPtrInput `pulumi:"unmatchedPreflights"`
 }
 
 func (VirtualServiceSpecHttpCorsPolicyArgs) ElementType() reflect.Type {
@@ -14120,13 +14112,6 @@ func (o VirtualServiceSpecHttpCorsPolicyOutput) MaxAge() pulumi.StringPtrOutput 
 	return o.ApplyT(func(v VirtualServiceSpecHttpCorsPolicy) *string { return v.MaxAge }).(pulumi.StringPtrOutput)
 }
 
-// Indicates whether preflight requests not matching the configured allowed origin shouldn't be forwarded to the upstream.
-//
-// Valid Options: FORWARD, IGNORE
-func (o VirtualServiceSpecHttpCorsPolicyOutput) UnmatchedPreflights() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v VirtualServiceSpecHttpCorsPolicy) *string { return v.UnmatchedPreflights }).(pulumi.StringPtrOutput)
-}
-
 type VirtualServiceSpecHttpCorsPolicyPtrOutput struct{ *pulumi.OutputState }
 
 func (VirtualServiceSpecHttpCorsPolicyPtrOutput) ElementType() reflect.Type {
@@ -14217,18 +14202,6 @@ func (o VirtualServiceSpecHttpCorsPolicyPtrOutput) MaxAge() pulumi.StringPtrOutp
 			return nil
 		}
 		return v.MaxAge
-	}).(pulumi.StringPtrOutput)
-}
-
-// Indicates whether preflight requests not matching the configured allowed origin shouldn't be forwarded to the upstream.
-//
-// Valid Options: FORWARD, IGNORE
-func (o VirtualServiceSpecHttpCorsPolicyPtrOutput) UnmatchedPreflights() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *VirtualServiceSpecHttpCorsPolicy) *string {
-		if v == nil {
-			return nil
-		}
-		return v.UnmatchedPreflights
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -15196,7 +15169,7 @@ type VirtualServiceSpecHttpHeadersResponseSet struct {
 }
 
 type VirtualServiceSpecHttpMatch struct {
-	// HTTP Authority values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+	// HTTP Authority values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 	Authority interface{} `pulumi:"authority"`
 	// Names of gateways where the rule should be applied.
 	Gateways []string `pulumi:"gateways"`
@@ -15204,7 +15177,7 @@ type VirtualServiceSpecHttpMatch struct {
 	Headers map[string]interface{} `pulumi:"headers"`
 	// Flag to specify whether the URI matching should be case-insensitive.
 	IgnoreUriCase *bool `pulumi:"ignoreUriCase"`
-	// HTTP Method values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+	// HTTP Method values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 	Method interface{} `pulumi:"method"`
 	// The name assigned to a match.
 	Name *string `pulumi:"name"`
@@ -15212,7 +15185,7 @@ type VirtualServiceSpecHttpMatch struct {
 	Port *int `pulumi:"port"`
 	// Query parameters for matching.
 	QueryParams map[string]interface{} `pulumi:"queryParams"`
-	// URI Scheme values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+	// URI Scheme values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 	Scheme interface{} `pulumi:"scheme"`
 	// One or more labels that constrain the applicability of a rule to source (client) workloads with the given labels.
 	SourceLabels map[string]string `pulumi:"sourceLabels"`
@@ -15220,7 +15193,7 @@ type VirtualServiceSpecHttpMatch struct {
 	SourceNamespace *string `pulumi:"sourceNamespace"`
 	// The human readable prefix to use when emitting statistics for this route.
 	StatPrefix *string `pulumi:"statPrefix"`
-	// URI to match values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+	// URI to match values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 	Uri interface{} `pulumi:"uri"`
 	// withoutHeader has the same syntax with the header, but has opposite meaning.
 	WithoutHeaders map[string]interface{} `pulumi:"withoutHeaders"`
@@ -15238,7 +15211,7 @@ type VirtualServiceSpecHttpMatchInput interface {
 }
 
 type VirtualServiceSpecHttpMatchArgs struct {
-	// HTTP Authority values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+	// HTTP Authority values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 	Authority pulumi.Input `pulumi:"authority"`
 	// Names of gateways where the rule should be applied.
 	Gateways pulumi.StringArrayInput `pulumi:"gateways"`
@@ -15246,7 +15219,7 @@ type VirtualServiceSpecHttpMatchArgs struct {
 	Headers pulumi.MapInput `pulumi:"headers"`
 	// Flag to specify whether the URI matching should be case-insensitive.
 	IgnoreUriCase pulumi.BoolPtrInput `pulumi:"ignoreUriCase"`
-	// HTTP Method values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+	// HTTP Method values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 	Method pulumi.Input `pulumi:"method"`
 	// The name assigned to a match.
 	Name pulumi.StringPtrInput `pulumi:"name"`
@@ -15254,7 +15227,7 @@ type VirtualServiceSpecHttpMatchArgs struct {
 	Port pulumi.IntPtrInput `pulumi:"port"`
 	// Query parameters for matching.
 	QueryParams pulumi.MapInput `pulumi:"queryParams"`
-	// URI Scheme values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+	// URI Scheme values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 	Scheme pulumi.Input `pulumi:"scheme"`
 	// One or more labels that constrain the applicability of a rule to source (client) workloads with the given labels.
 	SourceLabels pulumi.StringMapInput `pulumi:"sourceLabels"`
@@ -15262,7 +15235,7 @@ type VirtualServiceSpecHttpMatchArgs struct {
 	SourceNamespace pulumi.StringPtrInput `pulumi:"sourceNamespace"`
 	// The human readable prefix to use when emitting statistics for this route.
 	StatPrefix pulumi.StringPtrInput `pulumi:"statPrefix"`
-	// URI to match values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+	// URI to match values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 	Uri pulumi.Input `pulumi:"uri"`
 	// withoutHeader has the same syntax with the header, but has opposite meaning.
 	WithoutHeaders pulumi.MapInput `pulumi:"withoutHeaders"`
@@ -15319,7 +15292,7 @@ func (o VirtualServiceSpecHttpMatchOutput) ToVirtualServiceSpecHttpMatchOutputWi
 	return o
 }
 
-// HTTP Authority values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+// HTTP Authority values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 func (o VirtualServiceSpecHttpMatchOutput) Authority() pulumi.AnyOutput {
 	return o.ApplyT(func(v VirtualServiceSpecHttpMatch) interface{} { return v.Authority }).(pulumi.AnyOutput)
 }
@@ -15339,7 +15312,7 @@ func (o VirtualServiceSpecHttpMatchOutput) IgnoreUriCase() pulumi.BoolPtrOutput 
 	return o.ApplyT(func(v VirtualServiceSpecHttpMatch) *bool { return v.IgnoreUriCase }).(pulumi.BoolPtrOutput)
 }
 
-// HTTP Method values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+// HTTP Method values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 func (o VirtualServiceSpecHttpMatchOutput) Method() pulumi.AnyOutput {
 	return o.ApplyT(func(v VirtualServiceSpecHttpMatch) interface{} { return v.Method }).(pulumi.AnyOutput)
 }
@@ -15359,7 +15332,7 @@ func (o VirtualServiceSpecHttpMatchOutput) QueryParams() pulumi.MapOutput {
 	return o.ApplyT(func(v VirtualServiceSpecHttpMatch) map[string]interface{} { return v.QueryParams }).(pulumi.MapOutput)
 }
 
-// URI Scheme values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+// URI Scheme values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 func (o VirtualServiceSpecHttpMatchOutput) Scheme() pulumi.AnyOutput {
 	return o.ApplyT(func(v VirtualServiceSpecHttpMatch) interface{} { return v.Scheme }).(pulumi.AnyOutput)
 }
@@ -15379,7 +15352,7 @@ func (o VirtualServiceSpecHttpMatchOutput) StatPrefix() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v VirtualServiceSpecHttpMatch) *string { return v.StatPrefix }).(pulumi.StringPtrOutput)
 }
 
-// URI to match values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+// URI to match values are case-sensitive and formatted as follows: - `exact: "value"` for exact string match - `prefix: "value"` for prefix-based match - `regex: "value"` for RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 func (o VirtualServiceSpecHttpMatchOutput) Uri() pulumi.AnyOutput {
 	return o.ApplyT(func(v VirtualServiceSpecHttpMatch) interface{} { return v.Uri }).(pulumi.AnyOutput)
 }
@@ -16707,7 +16680,7 @@ func (o VirtualServiceSpecHttpRewritePtrOutput) UriRegexRewrite() VirtualService
 
 // rewrite the path portion of the URI with the specified regex.
 type VirtualServiceSpecHttpRewriteUriRegexRewrite struct {
-	// [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+	// RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 	Match *string `pulumi:"match"`
 	// The string that should replace into matching portions of original URI.
 	Rewrite *string `pulumi:"rewrite"`
@@ -16726,7 +16699,7 @@ type VirtualServiceSpecHttpRewriteUriRegexRewriteInput interface {
 
 // rewrite the path portion of the URI with the specified regex.
 type VirtualServiceSpecHttpRewriteUriRegexRewriteArgs struct {
-	// [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+	// RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 	Match pulumi.StringPtrInput `pulumi:"match"`
 	// The string that should replace into matching portions of original URI.
 	Rewrite pulumi.StringPtrInput `pulumi:"rewrite"`
@@ -16810,7 +16783,7 @@ func (o VirtualServiceSpecHttpRewriteUriRegexRewriteOutput) ToVirtualServiceSpec
 	}).(VirtualServiceSpecHttpRewriteUriRegexRewritePtrOutput)
 }
 
-// [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+// RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 func (o VirtualServiceSpecHttpRewriteUriRegexRewriteOutput) Match() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v VirtualServiceSpecHttpRewriteUriRegexRewrite) *string { return v.Match }).(pulumi.StringPtrOutput)
 }
@@ -16844,7 +16817,7 @@ func (o VirtualServiceSpecHttpRewriteUriRegexRewritePtrOutput) Elem() VirtualSer
 	}).(VirtualServiceSpecHttpRewriteUriRegexRewriteOutput)
 }
 
-// [RE2 style regex-based match](https://github.com/google/re2/wiki/Syntax).
+// RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
 func (o VirtualServiceSpecHttpRewriteUriRegexRewritePtrOutput) Match() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *VirtualServiceSpecHttpRewriteUriRegexRewrite) *string {
 		if v == nil {
@@ -18817,7 +18790,7 @@ type WorkloadEntryType struct {
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
 	// Configuration affecting VMs onboarded into the mesh. See more details at: https://istio.io/docs/reference/config/networking/workload-entry.html
-	Spec   WorkloadEntrySpec      `pulumi:"spec"`
+	Spec   *WorkloadEntrySpec     `pulumi:"spec"`
 	Status map[string]interface{} `pulumi:"status"`
 }
 
@@ -19087,12 +19060,12 @@ type WorkloadGroupType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	// Describes a collection of workload instances. See more details at: https://istio.io/docs/reference/config/networking/workload-group.html
+	// `WorkloadGroup` enables specifying the properties of a single workload for bootstrap and provides a template for `WorkloadEntry`, similar to how `Deployment` specifies properties of workloads via `Pod` templates.
 	Spec   *WorkloadGroupSpec     `pulumi:"spec"`
 	Status map[string]interface{} `pulumi:"status"`
 }
 
-// Describes a collection of workload instances. See more details at: https://istio.io/docs/reference/config/networking/workload-group.html
+// `WorkloadGroup` enables specifying the properties of a single workload for bootstrap and provides a template for `WorkloadEntry`, similar to how `Deployment` specifies properties of workloads via `Pod` templates.
 type WorkloadGroupSpec struct {
 	// Metadata that will be used for all corresponding `WorkloadEntries`.
 	Metadata *WorkloadGroupSpecMetadata `pulumi:"metadata"`
@@ -19113,7 +19086,7 @@ type WorkloadGroupSpecInput interface {
 	ToWorkloadGroupSpecOutputWithContext(context.Context) WorkloadGroupSpecOutput
 }
 
-// Describes a collection of workload instances. See more details at: https://istio.io/docs/reference/config/networking/workload-group.html
+// `WorkloadGroup` enables specifying the properties of a single workload for bootstrap and provides a template for `WorkloadEntry`, similar to how `Deployment` specifies properties of workloads via `Pod` templates.
 type WorkloadGroupSpecArgs struct {
 	// Metadata that will be used for all corresponding `WorkloadEntries`.
 	Metadata WorkloadGroupSpecMetadataPtrInput `pulumi:"metadata"`
@@ -19176,7 +19149,7 @@ func (i *workloadGroupSpecPtrType) ToWorkloadGroupSpecPtrOutputWithContext(ctx c
 	return pulumi.ToOutputWithContext(ctx, i).(WorkloadGroupSpecPtrOutput)
 }
 
-// Describes a collection of workload instances. See more details at: https://istio.io/docs/reference/config/networking/workload-group.html
+// `WorkloadGroup` enables specifying the properties of a single workload for bootstrap and provides a template for `WorkloadEntry`, similar to how `Deployment` specifies properties of workloads via `Pod` templates.
 type WorkloadGroupSpecOutput struct{ *pulumi.OutputState }
 
 func (WorkloadGroupSpecOutput) ElementType() reflect.Type {

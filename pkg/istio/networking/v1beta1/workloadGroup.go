@@ -18,7 +18,7 @@ type WorkloadGroup struct {
 	ApiVersion pulumi.StringPtrOutput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrOutput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrOutput `pulumi:"metadata"`
-	// Describes a collection of workload instances. See more details at: https://istio.io/docs/reference/config/networking/workload-group.html
+	// `WorkloadGroup` enables specifying the properties of a single workload for bootstrap and provides a template for `WorkloadEntry`, similar to how `Deployment` specifies properties of workloads via `Pod` templates.
 	Spec   WorkloadGroupSpecPtrOutput `pulumi:"spec"`
 	Status pulumi.MapOutput           `pulumi:"status"`
 }
@@ -68,7 +68,7 @@ type workloadGroupArgs struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	// Describes a collection of workload instances. See more details at: https://istio.io/docs/reference/config/networking/workload-group.html
+	// `WorkloadGroup` enables specifying the properties of a single workload for bootstrap and provides a template for `WorkloadEntry`, similar to how `Deployment` specifies properties of workloads via `Pod` templates.
 	Spec   *WorkloadGroupSpec     `pulumi:"spec"`
 	Status map[string]interface{} `pulumi:"status"`
 }
@@ -78,7 +78,7 @@ type WorkloadGroupArgs struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	// Describes a collection of workload instances. See more details at: https://istio.io/docs/reference/config/networking/workload-group.html
+	// `WorkloadGroup` enables specifying the properties of a single workload for bootstrap and provides a template for `WorkloadEntry`, similar to how `Deployment` specifies properties of workloads via `Pod` templates.
 	Spec   WorkloadGroupSpecPtrInput
 	Status pulumi.MapInput
 }
@@ -132,7 +132,7 @@ func (o WorkloadGroupOutput) Metadata() metav1.ObjectMetaPtrOutput {
 	return o.ApplyT(func(v *WorkloadGroup) metav1.ObjectMetaPtrOutput { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
 }
 
-// Describes a collection of workload instances. See more details at: https://istio.io/docs/reference/config/networking/workload-group.html
+// `WorkloadGroup` enables specifying the properties of a single workload for bootstrap and provides a template for `WorkloadEntry`, similar to how `Deployment` specifies properties of workloads via `Pod` templates.
 func (o WorkloadGroupOutput) Spec() WorkloadGroupSpecPtrOutput {
 	return o.ApplyT(func(v *WorkloadGroup) WorkloadGroupSpecPtrOutput { return v.Spec }).(WorkloadGroupSpecPtrOutput)
 }

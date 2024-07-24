@@ -12,7 +12,9 @@ clean:
 
 .PHONY: gen-istio
 gen-istio:
-	crd2pulumi --goPath=pkg/istio https://raw.githubusercontent.com/istio/istio/master/manifests/charts/base/crds/crd-all.gen.yaml
+	crd2pulumi --goPath=pkg/istio https://raw.githubusercontent.com/istio/istio/${istio_release}/manifests/charts/base/crds/crd-all.gen.yaml --force
+	#https://github.com/pulumi/crd2pulumi/issues/89
+	mv pkg/kubernetes pkg/istio
 
 .PHONY: gen-cert-manager
 gen-cert-manager:
@@ -22,6 +24,8 @@ gen-cert-manager:
 		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-clusterissuers.yaml \
 		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-issuers.yaml \
 		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-orders.yaml
+	#https://github.com/pulumi/crd2pulumi/issues/89
+	mv pkg/kubernetes pkg/certmanager
 
 .PHONY: go-deps
 go-deps:
