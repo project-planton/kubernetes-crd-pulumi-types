@@ -1352,9 +1352,9 @@ type TelemetrySpecTargetRef struct {
 	// group is the group of the target resource.
 	Group *string `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind *string `pulumi:"kind"`
+	Kind string `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name *string `pulumi:"name"`
+	Name string `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace *string `pulumi:"namespace"`
 }
@@ -1374,9 +1374,9 @@ type TelemetrySpecTargetRefArgs struct {
 	// group is the group of the target resource.
 	Group pulumi.StringPtrInput `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind pulumi.StringPtrInput `pulumi:"kind"`
+	Kind pulumi.StringInput `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 }
@@ -1464,13 +1464,13 @@ func (o TelemetrySpecTargetRefOutput) Group() pulumi.StringPtrOutput {
 }
 
 // kind is kind of the target resource.
-func (o TelemetrySpecTargetRefOutput) Kind() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v TelemetrySpecTargetRef) *string { return v.Kind }).(pulumi.StringPtrOutput)
+func (o TelemetrySpecTargetRefOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v TelemetrySpecTargetRef) string { return v.Kind }).(pulumi.StringOutput)
 }
 
 // name is the name of the target resource.
-func (o TelemetrySpecTargetRefOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v TelemetrySpecTargetRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+func (o TelemetrySpecTargetRefOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v TelemetrySpecTargetRef) string { return v.Name }).(pulumi.StringOutput)
 }
 
 // namespace is the namespace of the referent.
@@ -1518,7 +1518,7 @@ func (o TelemetrySpecTargetRefPtrOutput) Kind() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return v.Kind
+		return &v.Kind
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -1528,7 +1528,7 @@ func (o TelemetrySpecTargetRefPtrOutput) Name() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return v.Name
+		return &v.Name
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -1546,9 +1546,9 @@ type TelemetrySpecTargetRefs struct {
 	// group is the group of the target resource.
 	Group *string `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind *string `pulumi:"kind"`
+	Kind string `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name *string `pulumi:"name"`
+	Name string `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace *string `pulumi:"namespace"`
 }
@@ -1568,9 +1568,9 @@ type TelemetrySpecTargetRefsArgs struct {
 	// group is the group of the target resource.
 	Group pulumi.StringPtrInput `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind pulumi.StringPtrInput `pulumi:"kind"`
+	Kind pulumi.StringInput `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 }
@@ -1632,13 +1632,13 @@ func (o TelemetrySpecTargetRefsOutput) Group() pulumi.StringPtrOutput {
 }
 
 // kind is kind of the target resource.
-func (o TelemetrySpecTargetRefsOutput) Kind() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v TelemetrySpecTargetRefs) *string { return v.Kind }).(pulumi.StringPtrOutput)
+func (o TelemetrySpecTargetRefsOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v TelemetrySpecTargetRefs) string { return v.Kind }).(pulumi.StringOutput)
 }
 
 // name is the name of the target resource.
-func (o TelemetrySpecTargetRefsOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v TelemetrySpecTargetRefs) *string { return v.Name }).(pulumi.StringPtrOutput)
+func (o TelemetrySpecTargetRefsOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v TelemetrySpecTargetRefs) string { return v.Name }).(pulumi.StringOutput)
 }
 
 // namespace is the namespace of the referent.

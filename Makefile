@@ -12,19 +12,16 @@ clean:
 
 .PHONY: gen-istio
 gen-istio:
-	crd2pulumi --goPath=pkg/istio https://raw.githubusercontent.com/istio/istio/${istio_release}/manifests/charts/base/crds/crd-all.gen.yaml
+	crd2pulumi --goPath=pkg/istio https://raw.githubusercontent.com/istio/istio/master/manifests/charts/base/crds/crd-all.gen.yaml
 
 .PHONY: gen-cert-manager
 gen-cert-manager:
-	crd2pulumi --goPath=pkg/certmanager https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-certificates.yaml
-	crd2pulumi --goPath=pkg/certmanager https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-certificaterequests.yaml
-	crd2pulumi --goPath=pkg/certmanager https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-challenges.yaml
-	crd2pulumi --goPath=pkg/certmanager https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-clusterissuers.yaml
-	crd2pulumi --goPath=pkg/certmanager https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-issuers.yaml
-	crd2pulumi --goPath=pkg/certmanager https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-orders.yaml
-
-.PHONY: gen
-gen: clean gen-istio gen-cert-manager
+	crd2pulumi --goPath=pkg/certmanager https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-certificates.yaml \
+		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-certificaterequests.yaml \
+		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-challenges.yaml \
+		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-clusterissuers.yaml \
+		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-issuers.yaml \
+		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-orders.yaml
 
 .PHONY: go-deps
 go-deps:
@@ -44,3 +41,6 @@ build-go: go-deps go-vet go-fmt
 
 .PHONY: build
 build: clean gen build-go
+
+.PHONY: gen
+gen: clean gen-istio gen-cert-manager

@@ -19,8 +19,8 @@ type WorkloadEntry struct {
 	Kind       pulumi.StringPtrOutput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrOutput `pulumi:"metadata"`
 	// Configuration affecting VMs onboarded into the mesh. See more details at: https://istio.io/docs/reference/config/networking/workload-entry.html
-	Spec   WorkloadEntrySpecPtrOutput `pulumi:"spec"`
-	Status pulumi.MapOutput           `pulumi:"status"`
+	Spec   WorkloadEntrySpecOutput `pulumi:"spec"`
+	Status pulumi.MapOutput        `pulumi:"status"`
 }
 
 // NewWorkloadEntry registers a new resource with the given unique name, arguments, and options.
@@ -133,8 +133,8 @@ func (o WorkloadEntryOutput) Metadata() metav1.ObjectMetaPtrOutput {
 }
 
 // Configuration affecting VMs onboarded into the mesh. See more details at: https://istio.io/docs/reference/config/networking/workload-entry.html
-func (o WorkloadEntryOutput) Spec() WorkloadEntrySpecPtrOutput {
-	return o.ApplyT(func(v *WorkloadEntry) WorkloadEntrySpecPtrOutput { return v.Spec }).(WorkloadEntrySpecPtrOutput)
+func (o WorkloadEntryOutput) Spec() WorkloadEntrySpecOutput {
+	return o.ApplyT(func(v *WorkloadEntry) WorkloadEntrySpecOutput { return v.Spec }).(WorkloadEntrySpecOutput)
 }
 
 func (o WorkloadEntryOutput) Status() pulumi.MapOutput {

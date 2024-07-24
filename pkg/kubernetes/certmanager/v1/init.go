@@ -21,6 +21,12 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
+	case "kubernetes:cert-manager.io/v1:Certificate":
+		r = &Certificate{}
+	case "kubernetes:cert-manager.io/v1:CertificateRequest":
+		r = &CertificateRequest{}
+	case "kubernetes:cert-manager.io/v1:ClusterIssuer":
+		r = &ClusterIssuer{}
 	case "kubernetes:cert-manager.io/v1:Issuer":
 		r = &Issuer{}
 	default:

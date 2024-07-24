@@ -1115,9 +1115,9 @@ func (o RequestAuthenticationSpecJwtRulesFromHeadersArrayOutput) Index(i pulumi.
 
 type RequestAuthenticationSpecJwtRulesOutputClaimToHeaders struct {
 	// The name of the claim to be copied from.
-	Claim *string `pulumi:"claim"`
+	Claim string `pulumi:"claim"`
 	// The name of the header to be created.
-	Header *string `pulumi:"header"`
+	Header string `pulumi:"header"`
 }
 
 // RequestAuthenticationSpecJwtRulesOutputClaimToHeadersInput is an input type that accepts RequestAuthenticationSpecJwtRulesOutputClaimToHeadersArgs and RequestAuthenticationSpecJwtRulesOutputClaimToHeadersOutput values.
@@ -1133,9 +1133,9 @@ type RequestAuthenticationSpecJwtRulesOutputClaimToHeadersInput interface {
 
 type RequestAuthenticationSpecJwtRulesOutputClaimToHeadersArgs struct {
 	// The name of the claim to be copied from.
-	Claim pulumi.StringPtrInput `pulumi:"claim"`
+	Claim pulumi.StringInput `pulumi:"claim"`
 	// The name of the header to be created.
-	Header pulumi.StringPtrInput `pulumi:"header"`
+	Header pulumi.StringInput `pulumi:"header"`
 }
 
 func (RequestAuthenticationSpecJwtRulesOutputClaimToHeadersArgs) ElementType() reflect.Type {
@@ -1190,13 +1190,13 @@ func (o RequestAuthenticationSpecJwtRulesOutputClaimToHeadersOutput) ToRequestAu
 }
 
 // The name of the claim to be copied from.
-func (o RequestAuthenticationSpecJwtRulesOutputClaimToHeadersOutput) Claim() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v RequestAuthenticationSpecJwtRulesOutputClaimToHeaders) *string { return v.Claim }).(pulumi.StringPtrOutput)
+func (o RequestAuthenticationSpecJwtRulesOutputClaimToHeadersOutput) Claim() pulumi.StringOutput {
+	return o.ApplyT(func(v RequestAuthenticationSpecJwtRulesOutputClaimToHeaders) string { return v.Claim }).(pulumi.StringOutput)
 }
 
 // The name of the header to be created.
-func (o RequestAuthenticationSpecJwtRulesOutputClaimToHeadersOutput) Header() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v RequestAuthenticationSpecJwtRulesOutputClaimToHeaders) *string { return v.Header }).(pulumi.StringPtrOutput)
+func (o RequestAuthenticationSpecJwtRulesOutputClaimToHeadersOutput) Header() pulumi.StringOutput {
+	return o.ApplyT(func(v RequestAuthenticationSpecJwtRulesOutputClaimToHeaders) string { return v.Header }).(pulumi.StringOutput)
 }
 
 type RequestAuthenticationSpecJwtRulesOutputClaimToHeadersArrayOutput struct{ *pulumi.OutputState }
@@ -1367,9 +1367,9 @@ type RequestAuthenticationSpecTargetRef struct {
 	// group is the group of the target resource.
 	Group *string `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind *string `pulumi:"kind"`
+	Kind string `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name *string `pulumi:"name"`
+	Name string `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace *string `pulumi:"namespace"`
 }
@@ -1389,9 +1389,9 @@ type RequestAuthenticationSpecTargetRefArgs struct {
 	// group is the group of the target resource.
 	Group pulumi.StringPtrInput `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind pulumi.StringPtrInput `pulumi:"kind"`
+	Kind pulumi.StringInput `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 }
@@ -1479,13 +1479,13 @@ func (o RequestAuthenticationSpecTargetRefOutput) Group() pulumi.StringPtrOutput
 }
 
 // kind is kind of the target resource.
-func (o RequestAuthenticationSpecTargetRefOutput) Kind() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v RequestAuthenticationSpecTargetRef) *string { return v.Kind }).(pulumi.StringPtrOutput)
+func (o RequestAuthenticationSpecTargetRefOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v RequestAuthenticationSpecTargetRef) string { return v.Kind }).(pulumi.StringOutput)
 }
 
 // name is the name of the target resource.
-func (o RequestAuthenticationSpecTargetRefOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v RequestAuthenticationSpecTargetRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+func (o RequestAuthenticationSpecTargetRefOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v RequestAuthenticationSpecTargetRef) string { return v.Name }).(pulumi.StringOutput)
 }
 
 // namespace is the namespace of the referent.
@@ -1533,7 +1533,7 @@ func (o RequestAuthenticationSpecTargetRefPtrOutput) Kind() pulumi.StringPtrOutp
 		if v == nil {
 			return nil
 		}
-		return v.Kind
+		return &v.Kind
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -1543,7 +1543,7 @@ func (o RequestAuthenticationSpecTargetRefPtrOutput) Name() pulumi.StringPtrOutp
 		if v == nil {
 			return nil
 		}
-		return v.Name
+		return &v.Name
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -1561,9 +1561,9 @@ type RequestAuthenticationSpecTargetRefs struct {
 	// group is the group of the target resource.
 	Group *string `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind *string `pulumi:"kind"`
+	Kind string `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name *string `pulumi:"name"`
+	Name string `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace *string `pulumi:"namespace"`
 }
@@ -1583,9 +1583,9 @@ type RequestAuthenticationSpecTargetRefsArgs struct {
 	// group is the group of the target resource.
 	Group pulumi.StringPtrInput `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind pulumi.StringPtrInput `pulumi:"kind"`
+	Kind pulumi.StringInput `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 }
@@ -1647,13 +1647,13 @@ func (o RequestAuthenticationSpecTargetRefsOutput) Group() pulumi.StringPtrOutpu
 }
 
 // kind is kind of the target resource.
-func (o RequestAuthenticationSpecTargetRefsOutput) Kind() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v RequestAuthenticationSpecTargetRefs) *string { return v.Kind }).(pulumi.StringPtrOutput)
+func (o RequestAuthenticationSpecTargetRefsOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v RequestAuthenticationSpecTargetRefs) string { return v.Kind }).(pulumi.StringOutput)
 }
 
 // name is the name of the target resource.
-func (o RequestAuthenticationSpecTargetRefsOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v RequestAuthenticationSpecTargetRefs) *string { return v.Name }).(pulumi.StringPtrOutput)
+func (o RequestAuthenticationSpecTargetRefsOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v RequestAuthenticationSpecTargetRefs) string { return v.Name }).(pulumi.StringOutput)
 }
 
 // namespace is the namespace of the referent.

@@ -826,9 +826,9 @@ type WasmPluginSpecTargetRef struct {
 	// group is the group of the target resource.
 	Group *string `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind *string `pulumi:"kind"`
+	Kind string `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name *string `pulumi:"name"`
+	Name string `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace *string `pulumi:"namespace"`
 }
@@ -848,9 +848,9 @@ type WasmPluginSpecTargetRefArgs struct {
 	// group is the group of the target resource.
 	Group pulumi.StringPtrInput `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind pulumi.StringPtrInput `pulumi:"kind"`
+	Kind pulumi.StringInput `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 }
@@ -938,13 +938,13 @@ func (o WasmPluginSpecTargetRefOutput) Group() pulumi.StringPtrOutput {
 }
 
 // kind is kind of the target resource.
-func (o WasmPluginSpecTargetRefOutput) Kind() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WasmPluginSpecTargetRef) *string { return v.Kind }).(pulumi.StringPtrOutput)
+func (o WasmPluginSpecTargetRefOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v WasmPluginSpecTargetRef) string { return v.Kind }).(pulumi.StringOutput)
 }
 
 // name is the name of the target resource.
-func (o WasmPluginSpecTargetRefOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WasmPluginSpecTargetRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+func (o WasmPluginSpecTargetRefOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v WasmPluginSpecTargetRef) string { return v.Name }).(pulumi.StringOutput)
 }
 
 // namespace is the namespace of the referent.
@@ -992,7 +992,7 @@ func (o WasmPluginSpecTargetRefPtrOutput) Kind() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return v.Kind
+		return &v.Kind
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -1002,7 +1002,7 @@ func (o WasmPluginSpecTargetRefPtrOutput) Name() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return v.Name
+		return &v.Name
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -1020,9 +1020,9 @@ type WasmPluginSpecTargetRefs struct {
 	// group is the group of the target resource.
 	Group *string `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind *string `pulumi:"kind"`
+	Kind string `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name *string `pulumi:"name"`
+	Name string `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace *string `pulumi:"namespace"`
 }
@@ -1042,9 +1042,9 @@ type WasmPluginSpecTargetRefsArgs struct {
 	// group is the group of the target resource.
 	Group pulumi.StringPtrInput `pulumi:"group"`
 	// kind is kind of the target resource.
-	Kind pulumi.StringPtrInput `pulumi:"kind"`
+	Kind pulumi.StringInput `pulumi:"kind"`
 	// name is the name of the target resource.
-	Name pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
 	// namespace is the namespace of the referent.
 	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 }
@@ -1106,13 +1106,13 @@ func (o WasmPluginSpecTargetRefsOutput) Group() pulumi.StringPtrOutput {
 }
 
 // kind is kind of the target resource.
-func (o WasmPluginSpecTargetRefsOutput) Kind() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WasmPluginSpecTargetRefs) *string { return v.Kind }).(pulumi.StringPtrOutput)
+func (o WasmPluginSpecTargetRefsOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v WasmPluginSpecTargetRefs) string { return v.Kind }).(pulumi.StringOutput)
 }
 
 // name is the name of the target resource.
-func (o WasmPluginSpecTargetRefsOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WasmPluginSpecTargetRefs) *string { return v.Name }).(pulumi.StringPtrOutput)
+func (o WasmPluginSpecTargetRefsOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v WasmPluginSpecTargetRefs) string { return v.Name }).(pulumi.StringOutput)
 }
 
 // namespace is the namespace of the referent.
