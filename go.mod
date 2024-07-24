@@ -1,6 +1,6 @@
 module github.com/plantoncloud/kubernetes-crd-pulumi-types
 
-go 1.22
+go 1.21
 
 require (
 	github.com/blang/semver v3.5.1+incompatible

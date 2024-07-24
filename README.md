@@ -9,10 +9,10 @@ Kubernetes Custom Resource Definitions, which makes it easy to create those cust
 brew install pulumi/tap/crd2pulumi
 ```
 
-2. Generate Pulumi Types for CRDs ex: Istio CRDs
+2. Generate Pulumi Types for CRDs
 
 ```bash
-crd2pulumi --goPath=pkg/istio https://raw.githubusercontent.com/istio/istio/master/manifests/charts/base/crds/crd-all.gen.yaml
+make build
 ```
 
 ## Golang Bug
