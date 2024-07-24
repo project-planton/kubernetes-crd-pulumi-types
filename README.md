@@ -14,3 +14,8 @@ brew install pulumi/tap/crd2pulumi
 ```bash
 crd2pulumi --goPath=pkg/istio https://raw.githubusercontent.com/istio/istio/master/manifests/charts/base/crds/crd-all.gen.yaml
 ```
+
+## Golang Bug
+
+There is an open issue [#89](https://github.com/pulumi/crd2pulumi/issues/89) about `goPath` not working as expected. As a result, the kubernetes resources are created
+inside `pkg/kubernetes` when the `goPath` is specified as `pkg/istio` or `pkg/certmanager`.
