@@ -10,6 +10,10 @@ cert_manager_release=release-1.15
 #https://github.com/apache/solr-operator/releases/tag/v0.8.1
 solr_operator_release=v0.8.1
 
+#https://github.com/strimzi/strimzi-kafka-operator/tree/main/install/cluster-operator
+#https://github.com/strimzi/strimzi-kafka-operator/tree/release-0.42.x
+strimzi_operator_release=release-0.42.x
+
 .PHONY: clean
 clean:
 	rm -rf ${go_build_dir}
@@ -33,9 +37,25 @@ gen-cert-manager:
 
 .PHONY: gen-solr-operator
 gen-solr-operator:
-	crd2pulumi --force --goPath=pkg/istio https://raw.githubusercontent.com/apache/solr-operator/${solr_operator_release}/helm/solr-operator/crds/crds.yaml
+	crd2pulumi --force --goPath=pkg/solroperator https://raw.githubusercontent.com/apache/solr-operator/${solr_operator_release}/helm/solr-operator/crds/crds.yaml
 	#https://github.com/pulumi/crd2pulumi/issues/89
 	mv pkg/kubernetes pkg/solroperator
+
+.PHONY: gen-strimzi-operator
+gen-strimzi-operator:
+	crd2pulumi --force --goPath=pkg/strimzioperator https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/main/install/cluster-operator/040-Crd-kafka.yaml \
+		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/041-Crd-kafkaconnect.yaml \
+		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/042-Crd-strimzipodset.yaml\
+		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/043-Crd-kafkatopic.yaml\
+		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/044-Crd-kafkauser.yaml \
+		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/045-Crd-kafkamirrormaker.yaml\
+		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/046-Crd-kafkabridge.yaml\
+		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/047-Crd-kafkaconnector.yaml\
+		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/048-Crd-kafkamirrormaker2.yaml\
+		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/049-Crd-kafkarebalance.yaml\
+		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/04A-Crd-kafkanodepool.yaml
+	#https://github.com/pulumi/crd2pulumi/issues/89
+	mv pkg/kubernetes pkg/strimzioperator
 
 .PHONY: go-deps
 go-deps:
@@ -57,4 +77,4 @@ build-go: go-deps go-vet go-fmt
 build: clean gen build-go
 
 .PHONY: gen
-gen: clean gen-istio gen-cert-manager gen-solr-operator
+gen: clean gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator
