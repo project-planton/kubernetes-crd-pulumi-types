@@ -14,6 +14,10 @@ solr_operator_release=v0.8.1
 #https://github.com/strimzi/strimzi-kafka-operator/tree/release-0.42.x
 strimzi_operator_release=release-0.42.x
 
+#https://github.com/zalando/postgres-operator/tree/v1.12.2/manifests
+#https://github.com/zalando/postgres-operator/tree/v1.12.2
+zalando_operator_release=v1.12.2
+
 .PHONY: clean
 clean:
 	rm -rf ${go_build_dir}
@@ -57,6 +61,15 @@ gen-strimzi-operator:
 	#https://github.com/pulumi/crd2pulumi/issues/89
 	mv pkg/kubernetes pkg/strimzioperator
 
+
+.PHONY: gen-zalando-operator
+gen-zalando-operator:
+	crd2pulumi --force --goPath=pkg/zalandooperator https://raw.githubusercontent.com/zalando/postgres-operator/v1.12.2/manifests/operatorconfiguration.crd.yaml \
+		https://raw.githubusercontent.com/zalando/postgres-operator/v1.12.2/manifests/postgresql.crd.yaml \
+		https://raw.githubusercontent.com/zalando/postgres-operator/v1.12.2/manifests/postgresteam.crd.yaml
+	#https://github.com/pulumi/crd2pulumi/issues/89
+	mv pkg/kubernetes pkg/zalandooperator
+
 .PHONY: go-deps
 go-deps:
 	go mod download
@@ -77,4 +90,4 @@ build-go: go-deps go-vet go-fmt
 build: clean gen build-go
 
 .PHONY: gen
-gen: clean gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator
+gen: clean gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator
