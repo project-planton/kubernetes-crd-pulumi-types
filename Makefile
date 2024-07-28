@@ -18,6 +18,10 @@ strimzi_operator_release=release-0.42.x
 #https://github.com/zalando/postgres-operator/tree/v1.12.2
 zalando_operator_release=v1.12.2
 
+#https://github.com/external-secrets/external-secrets/blob/v0.9.20/deploy/crds/bundle.yaml
+#https://github.com/external-secrets/external-secrets/tree/v0.9.20
+external_secrets_release=v0.9.20
+
 .PHONY: clean
 clean:
 	rm -rf ${go_build_dir}
@@ -70,6 +74,12 @@ gen-zalando-operator:
 	#https://github.com/pulumi/crd2pulumi/issues/89
 	mv pkg/kubernetes pkg/zalandooperator
 
+.PHONY: gen-external-secrets
+gen-external-secrets:
+	crd2pulumi --force --goPath=pkg/externalsecrets https://raw.githubusercontent.com/external-secrets/external-secrets/${external_secrets_release}/deploy/crds/bundle.yaml
+	#https://github.com/pulumi/crd2pulumi/issues/89
+	mv pkg/kubernetes pkg/externalsecrets
+
 .PHONY: go-deps
 go-deps:
 	go mod download
@@ -90,4 +100,4 @@ build-go: go-deps go-vet go-fmt
 build: clean gen build-go
 
 .PHONY: gen
-gen: clean gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator
+gen: clean gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator gen-external-secrets
