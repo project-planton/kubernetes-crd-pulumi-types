@@ -1,7 +1,13 @@
 go_build_dir=pkg
+
+#https://github.com/kubernetes-sigs/gateway-api/tree/main/config/crd/standard
+#https://github.com/kubernetes-sigs/gateway-api/tree/v1.1.0/config/crd/standard
+gateway_apis=v1.1.0
+
 #https://github.com/istio/istio/tree/master/manifests/charts/base/crds
 #https://github.com/istio/istio/tree/release-1.22
 istio_release=release-1.22
+
 #https://github.com/cert-manager/cert-manager/tree/master/deploy/crds
 #https://github.com/cert-manager/cert-manager/tree/release-1.15
 cert_manager_release=release-1.15
@@ -25,6 +31,16 @@ external_secrets_release=v0.9.20
 .PHONY: clean
 clean:
 	rm -rf ${go_build_dir}
+
+.PHONY: gen-gateway-apis
+gen-gateway-apis:
+	crd2pulumi --force --goPath=pkg/gatewayapis https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/${gateway_apis}/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml \
+	https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/${gateway_apis}/config/crd/standard/gateway.networking.k8s.io_gateways.yaml \
+	https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/${gateway_apis}/config/crd/standard/gateway.networking.k8s.io_grpcroutes.yaml \
+	https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/${gateway_apis}/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml \
+	https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/${gateway_apis}/config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml
+	#https://github.com/pulumi/crd2pulumi/issues/89
+	mv pkg/kubernetes pkg/gatewayapis
 
 .PHONY: gen-istio
 gen-istio:
@@ -100,4 +116,4 @@ build-go: go-deps go-vet go-fmt
 build: clean gen build-go
 
 .PHONY: gen
-gen: clean gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator gen-external-secrets
+gen: clean gen-gateway-apis gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator gen-external-secrets
