@@ -13,6 +13,1866 @@ import (
 
 var _ = utilities.GetEnvOrDefault
 
+// The specification of the user.
+type KafkaUserSpec struct {
+	// Authentication mechanism enabled for this Kafka user. The supported authentication mechanisms are `scram-sha-512`, `tls`, and `tls-external`.
+	//
+	// * `scram-sha-512` generates a secret with SASL SCRAM-SHA-512 credentials.
+	// * `tls` generates a secret with user certificate for mutual TLS authentication.
+	// * `tls-external` does not generate a user certificate.   But prepares the user for using mutual TLS authentication using a user certificate generated outside the User Operator.
+	//   ACLs and quotas set for this user are configured in the `CN=<username>` format.
+	//
+	// Authentication is optional. If authentication is not configured, no credentials are generated. ACLs and quotas set for the user are configured in the `<username>` format suitable for SASL authentication.
+	Authentication *KafkaUserSpecAuthentication `pulumi:"authentication"`
+	// Authorization rules for this Kafka user.
+	Authorization *KafkaUserSpecAuthorization `pulumi:"authorization"`
+	// Quotas on requests to control the broker resources used by clients. Network bandwidth and request rate quotas can be enforced.Kafka documentation for Kafka User quotas can be found at http://kafka.apache.org/documentation/#design_quotas.
+	Quotas *KafkaUserSpecQuotas `pulumi:"quotas"`
+	// Template to specify how Kafka User `Secrets` are generated.
+	Template *KafkaUserSpecTemplate `pulumi:"template"`
+}
+
+// KafkaUserSpecInput is an input type that accepts KafkaUserSpecArgs and KafkaUserSpecOutput values.
+// You can construct a concrete instance of `KafkaUserSpecInput` via:
+//
+//	KafkaUserSpecArgs{...}
+type KafkaUserSpecInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecOutput() KafkaUserSpecOutput
+	ToKafkaUserSpecOutputWithContext(context.Context) KafkaUserSpecOutput
+}
+
+// The specification of the user.
+type KafkaUserSpecArgs struct {
+	// Authentication mechanism enabled for this Kafka user. The supported authentication mechanisms are `scram-sha-512`, `tls`, and `tls-external`.
+	//
+	// * `scram-sha-512` generates a secret with SASL SCRAM-SHA-512 credentials.
+	// * `tls` generates a secret with user certificate for mutual TLS authentication.
+	// * `tls-external` does not generate a user certificate.   But prepares the user for using mutual TLS authentication using a user certificate generated outside the User Operator.
+	//   ACLs and quotas set for this user are configured in the `CN=<username>` format.
+	//
+	// Authentication is optional. If authentication is not configured, no credentials are generated. ACLs and quotas set for the user are configured in the `<username>` format suitable for SASL authentication.
+	Authentication KafkaUserSpecAuthenticationPtrInput `pulumi:"authentication"`
+	// Authorization rules for this Kafka user.
+	Authorization KafkaUserSpecAuthorizationPtrInput `pulumi:"authorization"`
+	// Quotas on requests to control the broker resources used by clients. Network bandwidth and request rate quotas can be enforced.Kafka documentation for Kafka User quotas can be found at http://kafka.apache.org/documentation/#design_quotas.
+	Quotas KafkaUserSpecQuotasPtrInput `pulumi:"quotas"`
+	// Template to specify how Kafka User `Secrets` are generated.
+	Template KafkaUserSpecTemplatePtrInput `pulumi:"template"`
+}
+
+func (KafkaUserSpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpec)(nil)).Elem()
+}
+
+func (i KafkaUserSpecArgs) ToKafkaUserSpecOutput() KafkaUserSpecOutput {
+	return i.ToKafkaUserSpecOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecArgs) ToKafkaUserSpecOutputWithContext(ctx context.Context) KafkaUserSpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecOutput)
+}
+
+func (i KafkaUserSpecArgs) ToKafkaUserSpecPtrOutput() KafkaUserSpecPtrOutput {
+	return i.ToKafkaUserSpecPtrOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecArgs) ToKafkaUserSpecPtrOutputWithContext(ctx context.Context) KafkaUserSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecOutput).ToKafkaUserSpecPtrOutputWithContext(ctx)
+}
+
+// KafkaUserSpecPtrInput is an input type that accepts KafkaUserSpecArgs, KafkaUserSpecPtr and KafkaUserSpecPtrOutput values.
+// You can construct a concrete instance of `KafkaUserSpecPtrInput` via:
+//
+//	        KafkaUserSpecArgs{...}
+//
+//	or:
+//
+//	        nil
+type KafkaUserSpecPtrInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecPtrOutput() KafkaUserSpecPtrOutput
+	ToKafkaUserSpecPtrOutputWithContext(context.Context) KafkaUserSpecPtrOutput
+}
+
+type kafkaUserSpecPtrType KafkaUserSpecArgs
+
+func KafkaUserSpecPtr(v *KafkaUserSpecArgs) KafkaUserSpecPtrInput {
+	return (*kafkaUserSpecPtrType)(v)
+}
+
+func (*kafkaUserSpecPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpec)(nil)).Elem()
+}
+
+func (i *kafkaUserSpecPtrType) ToKafkaUserSpecPtrOutput() KafkaUserSpecPtrOutput {
+	return i.ToKafkaUserSpecPtrOutputWithContext(context.Background())
+}
+
+func (i *kafkaUserSpecPtrType) ToKafkaUserSpecPtrOutputWithContext(ctx context.Context) KafkaUserSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecPtrOutput)
+}
+
+// The specification of the user.
+type KafkaUserSpecOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpec)(nil)).Elem()
+}
+
+func (o KafkaUserSpecOutput) ToKafkaUserSpecOutput() KafkaUserSpecOutput {
+	return o
+}
+
+func (o KafkaUserSpecOutput) ToKafkaUserSpecOutputWithContext(ctx context.Context) KafkaUserSpecOutput {
+	return o
+}
+
+func (o KafkaUserSpecOutput) ToKafkaUserSpecPtrOutput() KafkaUserSpecPtrOutput {
+	return o.ToKafkaUserSpecPtrOutputWithContext(context.Background())
+}
+
+func (o KafkaUserSpecOutput) ToKafkaUserSpecPtrOutputWithContext(ctx context.Context) KafkaUserSpecPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KafkaUserSpec) *KafkaUserSpec {
+		return &v
+	}).(KafkaUserSpecPtrOutput)
+}
+
+// Authentication mechanism enabled for this Kafka user. The supported authentication mechanisms are `scram-sha-512`, `tls`, and `tls-external`.
+//
+//   - `scram-sha-512` generates a secret with SASL SCRAM-SHA-512 credentials.
+//   - `tls` generates a secret with user certificate for mutual TLS authentication.
+//   - `tls-external` does not generate a user certificate.   But prepares the user for using mutual TLS authentication using a user certificate generated outside the User Operator.
+//     ACLs and quotas set for this user are configured in the `CN=<username>` format.
+//
+// Authentication is optional. If authentication is not configured, no credentials are generated. ACLs and quotas set for the user are configured in the `<username>` format suitable for SASL authentication.
+func (o KafkaUserSpecOutput) Authentication() KafkaUserSpecAuthenticationPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpec) *KafkaUserSpecAuthentication { return v.Authentication }).(KafkaUserSpecAuthenticationPtrOutput)
+}
+
+// Authorization rules for this Kafka user.
+func (o KafkaUserSpecOutput) Authorization() KafkaUserSpecAuthorizationPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpec) *KafkaUserSpecAuthorization { return v.Authorization }).(KafkaUserSpecAuthorizationPtrOutput)
+}
+
+// Quotas on requests to control the broker resources used by clients. Network bandwidth and request rate quotas can be enforced.Kafka documentation for Kafka User quotas can be found at http://kafka.apache.org/documentation/#design_quotas.
+func (o KafkaUserSpecOutput) Quotas() KafkaUserSpecQuotasPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpec) *KafkaUserSpecQuotas { return v.Quotas }).(KafkaUserSpecQuotasPtrOutput)
+}
+
+// Template to specify how Kafka User `Secrets` are generated.
+func (o KafkaUserSpecOutput) Template() KafkaUserSpecTemplatePtrOutput {
+	return o.ApplyT(func(v KafkaUserSpec) *KafkaUserSpecTemplate { return v.Template }).(KafkaUserSpecTemplatePtrOutput)
+}
+
+type KafkaUserSpecPtrOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpec)(nil)).Elem()
+}
+
+func (o KafkaUserSpecPtrOutput) ToKafkaUserSpecPtrOutput() KafkaUserSpecPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecPtrOutput) ToKafkaUserSpecPtrOutputWithContext(ctx context.Context) KafkaUserSpecPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecPtrOutput) Elem() KafkaUserSpecOutput {
+	return o.ApplyT(func(v *KafkaUserSpec) KafkaUserSpec {
+		if v != nil {
+			return *v
+		}
+		var ret KafkaUserSpec
+		return ret
+	}).(KafkaUserSpecOutput)
+}
+
+// Authentication mechanism enabled for this Kafka user. The supported authentication mechanisms are `scram-sha-512`, `tls`, and `tls-external`.
+//
+//   - `scram-sha-512` generates a secret with SASL SCRAM-SHA-512 credentials.
+//   - `tls` generates a secret with user certificate for mutual TLS authentication.
+//   - `tls-external` does not generate a user certificate.   But prepares the user for using mutual TLS authentication using a user certificate generated outside the User Operator.
+//     ACLs and quotas set for this user are configured in the `CN=<username>` format.
+//
+// Authentication is optional. If authentication is not configured, no credentials are generated. ACLs and quotas set for the user are configured in the `<username>` format suitable for SASL authentication.
+func (o KafkaUserSpecPtrOutput) Authentication() KafkaUserSpecAuthenticationPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpec) *KafkaUserSpecAuthentication {
+		if v == nil {
+			return nil
+		}
+		return v.Authentication
+	}).(KafkaUserSpecAuthenticationPtrOutput)
+}
+
+// Authorization rules for this Kafka user.
+func (o KafkaUserSpecPtrOutput) Authorization() KafkaUserSpecAuthorizationPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpec) *KafkaUserSpecAuthorization {
+		if v == nil {
+			return nil
+		}
+		return v.Authorization
+	}).(KafkaUserSpecAuthorizationPtrOutput)
+}
+
+// Quotas on requests to control the broker resources used by clients. Network bandwidth and request rate quotas can be enforced.Kafka documentation for Kafka User quotas can be found at http://kafka.apache.org/documentation/#design_quotas.
+func (o KafkaUserSpecPtrOutput) Quotas() KafkaUserSpecQuotasPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpec) *KafkaUserSpecQuotas {
+		if v == nil {
+			return nil
+		}
+		return v.Quotas
+	}).(KafkaUserSpecQuotasPtrOutput)
+}
+
+// Template to specify how Kafka User `Secrets` are generated.
+func (o KafkaUserSpecPtrOutput) Template() KafkaUserSpecTemplatePtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpec) *KafkaUserSpecTemplate {
+		if v == nil {
+			return nil
+		}
+		return v.Template
+	}).(KafkaUserSpecTemplatePtrOutput)
+}
+
+// Authentication mechanism enabled for this Kafka user. The supported authentication mechanisms are `scram-sha-512`, `tls`, and `tls-external`.
+//
+//   - `scram-sha-512` generates a secret with SASL SCRAM-SHA-512 credentials.
+//   - `tls` generates a secret with user certificate for mutual TLS authentication.
+//   - `tls-external` does not generate a user certificate.   But prepares the user for using mutual TLS authentication using a user certificate generated outside the User Operator.
+//     ACLs and quotas set for this user are configured in the `CN=<username>` format.
+//
+// Authentication is optional. If authentication is not configured, no credentials are generated. ACLs and quotas set for the user are configured in the `<username>` format suitable for SASL authentication.
+type KafkaUserSpecAuthentication struct {
+	// Specify the password for the user. If not set, a new password is generated by the User Operator.
+	Password *KafkaUserSpecAuthenticationPassword `pulumi:"password"`
+	// Authentication type.
+	Type string `pulumi:"type"`
+}
+
+// KafkaUserSpecAuthenticationInput is an input type that accepts KafkaUserSpecAuthenticationArgs and KafkaUserSpecAuthenticationOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthenticationInput` via:
+//
+//	KafkaUserSpecAuthenticationArgs{...}
+type KafkaUserSpecAuthenticationInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthenticationOutput() KafkaUserSpecAuthenticationOutput
+	ToKafkaUserSpecAuthenticationOutputWithContext(context.Context) KafkaUserSpecAuthenticationOutput
+}
+
+// Authentication mechanism enabled for this Kafka user. The supported authentication mechanisms are `scram-sha-512`, `tls`, and `tls-external`.
+//
+//   - `scram-sha-512` generates a secret with SASL SCRAM-SHA-512 credentials.
+//   - `tls` generates a secret with user certificate for mutual TLS authentication.
+//   - `tls-external` does not generate a user certificate.   But prepares the user for using mutual TLS authentication using a user certificate generated outside the User Operator.
+//     ACLs and quotas set for this user are configured in the `CN=<username>` format.
+//
+// Authentication is optional. If authentication is not configured, no credentials are generated. ACLs and quotas set for the user are configured in the `<username>` format suitable for SASL authentication.
+type KafkaUserSpecAuthenticationArgs struct {
+	// Specify the password for the user. If not set, a new password is generated by the User Operator.
+	Password KafkaUserSpecAuthenticationPasswordPtrInput `pulumi:"password"`
+	// Authentication type.
+	Type pulumi.StringInput `pulumi:"type"`
+}
+
+func (KafkaUserSpecAuthenticationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthentication)(nil)).Elem()
+}
+
+func (i KafkaUserSpecAuthenticationArgs) ToKafkaUserSpecAuthenticationOutput() KafkaUserSpecAuthenticationOutput {
+	return i.ToKafkaUserSpecAuthenticationOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthenticationArgs) ToKafkaUserSpecAuthenticationOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationOutput)
+}
+
+func (i KafkaUserSpecAuthenticationArgs) ToKafkaUserSpecAuthenticationPtrOutput() KafkaUserSpecAuthenticationPtrOutput {
+	return i.ToKafkaUserSpecAuthenticationPtrOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthenticationArgs) ToKafkaUserSpecAuthenticationPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationOutput).ToKafkaUserSpecAuthenticationPtrOutputWithContext(ctx)
+}
+
+// KafkaUserSpecAuthenticationPtrInput is an input type that accepts KafkaUserSpecAuthenticationArgs, KafkaUserSpecAuthenticationPtr and KafkaUserSpecAuthenticationPtrOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthenticationPtrInput` via:
+//
+//	        KafkaUserSpecAuthenticationArgs{...}
+//
+//	or:
+//
+//	        nil
+type KafkaUserSpecAuthenticationPtrInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthenticationPtrOutput() KafkaUserSpecAuthenticationPtrOutput
+	ToKafkaUserSpecAuthenticationPtrOutputWithContext(context.Context) KafkaUserSpecAuthenticationPtrOutput
+}
+
+type kafkaUserSpecAuthenticationPtrType KafkaUserSpecAuthenticationArgs
+
+func KafkaUserSpecAuthenticationPtr(v *KafkaUserSpecAuthenticationArgs) KafkaUserSpecAuthenticationPtrInput {
+	return (*kafkaUserSpecAuthenticationPtrType)(v)
+}
+
+func (*kafkaUserSpecAuthenticationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecAuthentication)(nil)).Elem()
+}
+
+func (i *kafkaUserSpecAuthenticationPtrType) ToKafkaUserSpecAuthenticationPtrOutput() KafkaUserSpecAuthenticationPtrOutput {
+	return i.ToKafkaUserSpecAuthenticationPtrOutputWithContext(context.Background())
+}
+
+func (i *kafkaUserSpecAuthenticationPtrType) ToKafkaUserSpecAuthenticationPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationPtrOutput)
+}
+
+// Authentication mechanism enabled for this Kafka user. The supported authentication mechanisms are `scram-sha-512`, `tls`, and `tls-external`.
+//
+//   - `scram-sha-512` generates a secret with SASL SCRAM-SHA-512 credentials.
+//   - `tls` generates a secret with user certificate for mutual TLS authentication.
+//   - `tls-external` does not generate a user certificate.   But prepares the user for using mutual TLS authentication using a user certificate generated outside the User Operator.
+//     ACLs and quotas set for this user are configured in the `CN=<username>` format.
+//
+// Authentication is optional. If authentication is not configured, no credentials are generated. ACLs and quotas set for the user are configured in the `<username>` format suitable for SASL authentication.
+type KafkaUserSpecAuthenticationOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthenticationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthentication)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthenticationOutput) ToKafkaUserSpecAuthenticationOutput() KafkaUserSpecAuthenticationOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationOutput) ToKafkaUserSpecAuthenticationOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationOutput) ToKafkaUserSpecAuthenticationPtrOutput() KafkaUserSpecAuthenticationPtrOutput {
+	return o.ToKafkaUserSpecAuthenticationPtrOutputWithContext(context.Background())
+}
+
+func (o KafkaUserSpecAuthenticationOutput) ToKafkaUserSpecAuthenticationPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KafkaUserSpecAuthentication) *KafkaUserSpecAuthentication {
+		return &v
+	}).(KafkaUserSpecAuthenticationPtrOutput)
+}
+
+// Specify the password for the user. If not set, a new password is generated by the User Operator.
+func (o KafkaUserSpecAuthenticationOutput) Password() KafkaUserSpecAuthenticationPasswordPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthentication) *KafkaUserSpecAuthenticationPassword { return v.Password }).(KafkaUserSpecAuthenticationPasswordPtrOutput)
+}
+
+// Authentication type.
+func (o KafkaUserSpecAuthenticationOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthentication) string { return v.Type }).(pulumi.StringOutput)
+}
+
+type KafkaUserSpecAuthenticationPtrOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthenticationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecAuthentication)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthenticationPtrOutput) ToKafkaUserSpecAuthenticationPtrOutput() KafkaUserSpecAuthenticationPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPtrOutput) ToKafkaUserSpecAuthenticationPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPtrOutput) Elem() KafkaUserSpecAuthenticationOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthentication) KafkaUserSpecAuthentication {
+		if v != nil {
+			return *v
+		}
+		var ret KafkaUserSpecAuthentication
+		return ret
+	}).(KafkaUserSpecAuthenticationOutput)
+}
+
+// Specify the password for the user. If not set, a new password is generated by the User Operator.
+func (o KafkaUserSpecAuthenticationPtrOutput) Password() KafkaUserSpecAuthenticationPasswordPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthentication) *KafkaUserSpecAuthenticationPassword {
+		if v == nil {
+			return nil
+		}
+		return v.Password
+	}).(KafkaUserSpecAuthenticationPasswordPtrOutput)
+}
+
+// Authentication type.
+func (o KafkaUserSpecAuthenticationPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthentication) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
+// Specify the password for the user. If not set, a new password is generated by the User Operator.
+type KafkaUserSpecAuthenticationPassword struct {
+	// Secret from which the password should be read.
+	ValueFrom KafkaUserSpecAuthenticationPasswordValueFrom `pulumi:"valueFrom"`
+}
+
+// KafkaUserSpecAuthenticationPasswordInput is an input type that accepts KafkaUserSpecAuthenticationPasswordArgs and KafkaUserSpecAuthenticationPasswordOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthenticationPasswordInput` via:
+//
+//	KafkaUserSpecAuthenticationPasswordArgs{...}
+type KafkaUserSpecAuthenticationPasswordInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthenticationPasswordOutput() KafkaUserSpecAuthenticationPasswordOutput
+	ToKafkaUserSpecAuthenticationPasswordOutputWithContext(context.Context) KafkaUserSpecAuthenticationPasswordOutput
+}
+
+// Specify the password for the user. If not set, a new password is generated by the User Operator.
+type KafkaUserSpecAuthenticationPasswordArgs struct {
+	// Secret from which the password should be read.
+	ValueFrom KafkaUserSpecAuthenticationPasswordValueFromInput `pulumi:"valueFrom"`
+}
+
+func (KafkaUserSpecAuthenticationPasswordArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthenticationPassword)(nil)).Elem()
+}
+
+func (i KafkaUserSpecAuthenticationPasswordArgs) ToKafkaUserSpecAuthenticationPasswordOutput() KafkaUserSpecAuthenticationPasswordOutput {
+	return i.ToKafkaUserSpecAuthenticationPasswordOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthenticationPasswordArgs) ToKafkaUserSpecAuthenticationPasswordOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationPasswordOutput)
+}
+
+func (i KafkaUserSpecAuthenticationPasswordArgs) ToKafkaUserSpecAuthenticationPasswordPtrOutput() KafkaUserSpecAuthenticationPasswordPtrOutput {
+	return i.ToKafkaUserSpecAuthenticationPasswordPtrOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthenticationPasswordArgs) ToKafkaUserSpecAuthenticationPasswordPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationPasswordOutput).ToKafkaUserSpecAuthenticationPasswordPtrOutputWithContext(ctx)
+}
+
+// KafkaUserSpecAuthenticationPasswordPtrInput is an input type that accepts KafkaUserSpecAuthenticationPasswordArgs, KafkaUserSpecAuthenticationPasswordPtr and KafkaUserSpecAuthenticationPasswordPtrOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthenticationPasswordPtrInput` via:
+//
+//	        KafkaUserSpecAuthenticationPasswordArgs{...}
+//
+//	or:
+//
+//	        nil
+type KafkaUserSpecAuthenticationPasswordPtrInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthenticationPasswordPtrOutput() KafkaUserSpecAuthenticationPasswordPtrOutput
+	ToKafkaUserSpecAuthenticationPasswordPtrOutputWithContext(context.Context) KafkaUserSpecAuthenticationPasswordPtrOutput
+}
+
+type kafkaUserSpecAuthenticationPasswordPtrType KafkaUserSpecAuthenticationPasswordArgs
+
+func KafkaUserSpecAuthenticationPasswordPtr(v *KafkaUserSpecAuthenticationPasswordArgs) KafkaUserSpecAuthenticationPasswordPtrInput {
+	return (*kafkaUserSpecAuthenticationPasswordPtrType)(v)
+}
+
+func (*kafkaUserSpecAuthenticationPasswordPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecAuthenticationPassword)(nil)).Elem()
+}
+
+func (i *kafkaUserSpecAuthenticationPasswordPtrType) ToKafkaUserSpecAuthenticationPasswordPtrOutput() KafkaUserSpecAuthenticationPasswordPtrOutput {
+	return i.ToKafkaUserSpecAuthenticationPasswordPtrOutputWithContext(context.Background())
+}
+
+func (i *kafkaUserSpecAuthenticationPasswordPtrType) ToKafkaUserSpecAuthenticationPasswordPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationPasswordPtrOutput)
+}
+
+// Specify the password for the user. If not set, a new password is generated by the User Operator.
+type KafkaUserSpecAuthenticationPasswordOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthenticationPasswordOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthenticationPassword)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthenticationPasswordOutput) ToKafkaUserSpecAuthenticationPasswordOutput() KafkaUserSpecAuthenticationPasswordOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordOutput) ToKafkaUserSpecAuthenticationPasswordOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordOutput) ToKafkaUserSpecAuthenticationPasswordPtrOutput() KafkaUserSpecAuthenticationPasswordPtrOutput {
+	return o.ToKafkaUserSpecAuthenticationPasswordPtrOutputWithContext(context.Background())
+}
+
+func (o KafkaUserSpecAuthenticationPasswordOutput) ToKafkaUserSpecAuthenticationPasswordPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KafkaUserSpecAuthenticationPassword) *KafkaUserSpecAuthenticationPassword {
+		return &v
+	}).(KafkaUserSpecAuthenticationPasswordPtrOutput)
+}
+
+// Secret from which the password should be read.
+func (o KafkaUserSpecAuthenticationPasswordOutput) ValueFrom() KafkaUserSpecAuthenticationPasswordValueFromOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthenticationPassword) KafkaUserSpecAuthenticationPasswordValueFrom {
+		return v.ValueFrom
+	}).(KafkaUserSpecAuthenticationPasswordValueFromOutput)
+}
+
+type KafkaUserSpecAuthenticationPasswordPtrOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthenticationPasswordPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecAuthenticationPassword)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthenticationPasswordPtrOutput) ToKafkaUserSpecAuthenticationPasswordPtrOutput() KafkaUserSpecAuthenticationPasswordPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordPtrOutput) ToKafkaUserSpecAuthenticationPasswordPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordPtrOutput) Elem() KafkaUserSpecAuthenticationPasswordOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthenticationPassword) KafkaUserSpecAuthenticationPassword {
+		if v != nil {
+			return *v
+		}
+		var ret KafkaUserSpecAuthenticationPassword
+		return ret
+	}).(KafkaUserSpecAuthenticationPasswordOutput)
+}
+
+// Secret from which the password should be read.
+func (o KafkaUserSpecAuthenticationPasswordPtrOutput) ValueFrom() KafkaUserSpecAuthenticationPasswordValueFromPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthenticationPassword) *KafkaUserSpecAuthenticationPasswordValueFrom {
+		if v == nil {
+			return nil
+		}
+		return &v.ValueFrom
+	}).(KafkaUserSpecAuthenticationPasswordValueFromPtrOutput)
+}
+
+// Secret from which the password should be read.
+type KafkaUserSpecAuthenticationPasswordValueFrom struct {
+	// Selects a key of a Secret in the resource's namespace.
+	SecretKeyRef *KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef `pulumi:"secretKeyRef"`
+}
+
+// KafkaUserSpecAuthenticationPasswordValueFromInput is an input type that accepts KafkaUserSpecAuthenticationPasswordValueFromArgs and KafkaUserSpecAuthenticationPasswordValueFromOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthenticationPasswordValueFromInput` via:
+//
+//	KafkaUserSpecAuthenticationPasswordValueFromArgs{...}
+type KafkaUserSpecAuthenticationPasswordValueFromInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthenticationPasswordValueFromOutput() KafkaUserSpecAuthenticationPasswordValueFromOutput
+	ToKafkaUserSpecAuthenticationPasswordValueFromOutputWithContext(context.Context) KafkaUserSpecAuthenticationPasswordValueFromOutput
+}
+
+// Secret from which the password should be read.
+type KafkaUserSpecAuthenticationPasswordValueFromArgs struct {
+	// Selects a key of a Secret in the resource's namespace.
+	SecretKeyRef KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrInput `pulumi:"secretKeyRef"`
+}
+
+func (KafkaUserSpecAuthenticationPasswordValueFromArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthenticationPasswordValueFrom)(nil)).Elem()
+}
+
+func (i KafkaUserSpecAuthenticationPasswordValueFromArgs) ToKafkaUserSpecAuthenticationPasswordValueFromOutput() KafkaUserSpecAuthenticationPasswordValueFromOutput {
+	return i.ToKafkaUserSpecAuthenticationPasswordValueFromOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthenticationPasswordValueFromArgs) ToKafkaUserSpecAuthenticationPasswordValueFromOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationPasswordValueFromOutput)
+}
+
+func (i KafkaUserSpecAuthenticationPasswordValueFromArgs) ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutput() KafkaUserSpecAuthenticationPasswordValueFromPtrOutput {
+	return i.ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthenticationPasswordValueFromArgs) ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationPasswordValueFromOutput).ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutputWithContext(ctx)
+}
+
+// KafkaUserSpecAuthenticationPasswordValueFromPtrInput is an input type that accepts KafkaUserSpecAuthenticationPasswordValueFromArgs, KafkaUserSpecAuthenticationPasswordValueFromPtr and KafkaUserSpecAuthenticationPasswordValueFromPtrOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthenticationPasswordValueFromPtrInput` via:
+//
+//	        KafkaUserSpecAuthenticationPasswordValueFromArgs{...}
+//
+//	or:
+//
+//	        nil
+type KafkaUserSpecAuthenticationPasswordValueFromPtrInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutput() KafkaUserSpecAuthenticationPasswordValueFromPtrOutput
+	ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutputWithContext(context.Context) KafkaUserSpecAuthenticationPasswordValueFromPtrOutput
+}
+
+type kafkaUserSpecAuthenticationPasswordValueFromPtrType KafkaUserSpecAuthenticationPasswordValueFromArgs
+
+func KafkaUserSpecAuthenticationPasswordValueFromPtr(v *KafkaUserSpecAuthenticationPasswordValueFromArgs) KafkaUserSpecAuthenticationPasswordValueFromPtrInput {
+	return (*kafkaUserSpecAuthenticationPasswordValueFromPtrType)(v)
+}
+
+func (*kafkaUserSpecAuthenticationPasswordValueFromPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecAuthenticationPasswordValueFrom)(nil)).Elem()
+}
+
+func (i *kafkaUserSpecAuthenticationPasswordValueFromPtrType) ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutput() KafkaUserSpecAuthenticationPasswordValueFromPtrOutput {
+	return i.ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutputWithContext(context.Background())
+}
+
+func (i *kafkaUserSpecAuthenticationPasswordValueFromPtrType) ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationPasswordValueFromPtrOutput)
+}
+
+// Secret from which the password should be read.
+type KafkaUserSpecAuthenticationPasswordValueFromOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthenticationPasswordValueFromOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthenticationPasswordValueFrom)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromOutput) ToKafkaUserSpecAuthenticationPasswordValueFromOutput() KafkaUserSpecAuthenticationPasswordValueFromOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromOutput) ToKafkaUserSpecAuthenticationPasswordValueFromOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromOutput) ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutput() KafkaUserSpecAuthenticationPasswordValueFromPtrOutput {
+	return o.ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutputWithContext(context.Background())
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromOutput) ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KafkaUserSpecAuthenticationPasswordValueFrom) *KafkaUserSpecAuthenticationPasswordValueFrom {
+		return &v
+	}).(KafkaUserSpecAuthenticationPasswordValueFromPtrOutput)
+}
+
+// Selects a key of a Secret in the resource's namespace.
+func (o KafkaUserSpecAuthenticationPasswordValueFromOutput) SecretKeyRef() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthenticationPasswordValueFrom) *KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef {
+		return v.SecretKeyRef
+	}).(KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput)
+}
+
+type KafkaUserSpecAuthenticationPasswordValueFromPtrOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthenticationPasswordValueFromPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecAuthenticationPasswordValueFrom)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromPtrOutput) ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutput() KafkaUserSpecAuthenticationPasswordValueFromPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromPtrOutput) ToKafkaUserSpecAuthenticationPasswordValueFromPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromPtrOutput) Elem() KafkaUserSpecAuthenticationPasswordValueFromOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthenticationPasswordValueFrom) KafkaUserSpecAuthenticationPasswordValueFrom {
+		if v != nil {
+			return *v
+		}
+		var ret KafkaUserSpecAuthenticationPasswordValueFrom
+		return ret
+	}).(KafkaUserSpecAuthenticationPasswordValueFromOutput)
+}
+
+// Selects a key of a Secret in the resource's namespace.
+func (o KafkaUserSpecAuthenticationPasswordValueFromPtrOutput) SecretKeyRef() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthenticationPasswordValueFrom) *KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef {
+		if v == nil {
+			return nil
+		}
+		return v.SecretKeyRef
+	}).(KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput)
+}
+
+// Selects a key of a Secret in the resource's namespace.
+type KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef struct {
+	Key      *string `pulumi:"key"`
+	Name     *string `pulumi:"name"`
+	Optional *bool   `pulumi:"optional"`
+}
+
+// KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefInput is an input type that accepts KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs and KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefInput` via:
+//
+//	KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs{...}
+type KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput
+	ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutputWithContext(context.Context) KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput
+}
+
+// Selects a key of a Secret in the resource's namespace.
+type KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs struct {
+	Key      pulumi.StringPtrInput `pulumi:"key"`
+	Name     pulumi.StringPtrInput `pulumi:"name"`
+	Optional pulumi.BoolPtrInput   `pulumi:"optional"`
+}
+
+func (KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef)(nil)).Elem()
+}
+
+func (i KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput {
+	return i.ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput)
+}
+
+func (i KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput {
+	return i.ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput).ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutputWithContext(ctx)
+}
+
+// KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrInput is an input type that accepts KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs, KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtr and KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrInput` via:
+//
+//	        KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs{...}
+//
+//	or:
+//
+//	        nil
+type KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput
+	ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutputWithContext(context.Context) KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput
+}
+
+type kafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrType KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs
+
+func KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtr(v *KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs) KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrInput {
+	return (*kafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrType)(v)
+}
+
+func (*kafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef)(nil)).Elem()
+}
+
+func (i *kafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrType) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput {
+	return i.ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i *kafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrType) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput)
+}
+
+// Selects a key of a Secret in the resource's namespace.
+type KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput {
+	return o.ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef) *KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef {
+		return &v
+	}).(KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput)
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef) *bool { return v.Optional }).(pulumi.BoolPtrOutput)
+}
+
+type KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput) ToKafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput) Elem() KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef) KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef {
+		if v != nil {
+			return *v
+		}
+		var ret KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef
+		return ret
+	}).(KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput)
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Key
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRef) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Optional
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Authorization rules for this Kafka user.
+type KafkaUserSpecAuthorization struct {
+	// List of ACL rules which should be applied to this user.
+	Acls []KafkaUserSpecAuthorizationAcls `pulumi:"acls"`
+	// Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses the Kafka Admin API for managing the ACL rules.
+	Type string `pulumi:"type"`
+}
+
+// KafkaUserSpecAuthorizationInput is an input type that accepts KafkaUserSpecAuthorizationArgs and KafkaUserSpecAuthorizationOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthorizationInput` via:
+//
+//	KafkaUserSpecAuthorizationArgs{...}
+type KafkaUserSpecAuthorizationInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthorizationOutput() KafkaUserSpecAuthorizationOutput
+	ToKafkaUserSpecAuthorizationOutputWithContext(context.Context) KafkaUserSpecAuthorizationOutput
+}
+
+// Authorization rules for this Kafka user.
+type KafkaUserSpecAuthorizationArgs struct {
+	// List of ACL rules which should be applied to this user.
+	Acls KafkaUserSpecAuthorizationAclsArrayInput `pulumi:"acls"`
+	// Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses the Kafka Admin API for managing the ACL rules.
+	Type pulumi.StringInput `pulumi:"type"`
+}
+
+func (KafkaUserSpecAuthorizationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthorization)(nil)).Elem()
+}
+
+func (i KafkaUserSpecAuthorizationArgs) ToKafkaUserSpecAuthorizationOutput() KafkaUserSpecAuthorizationOutput {
+	return i.ToKafkaUserSpecAuthorizationOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthorizationArgs) ToKafkaUserSpecAuthorizationOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthorizationOutput)
+}
+
+func (i KafkaUserSpecAuthorizationArgs) ToKafkaUserSpecAuthorizationPtrOutput() KafkaUserSpecAuthorizationPtrOutput {
+	return i.ToKafkaUserSpecAuthorizationPtrOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthorizationArgs) ToKafkaUserSpecAuthorizationPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthorizationOutput).ToKafkaUserSpecAuthorizationPtrOutputWithContext(ctx)
+}
+
+// KafkaUserSpecAuthorizationPtrInput is an input type that accepts KafkaUserSpecAuthorizationArgs, KafkaUserSpecAuthorizationPtr and KafkaUserSpecAuthorizationPtrOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthorizationPtrInput` via:
+//
+//	        KafkaUserSpecAuthorizationArgs{...}
+//
+//	or:
+//
+//	        nil
+type KafkaUserSpecAuthorizationPtrInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthorizationPtrOutput() KafkaUserSpecAuthorizationPtrOutput
+	ToKafkaUserSpecAuthorizationPtrOutputWithContext(context.Context) KafkaUserSpecAuthorizationPtrOutput
+}
+
+type kafkaUserSpecAuthorizationPtrType KafkaUserSpecAuthorizationArgs
+
+func KafkaUserSpecAuthorizationPtr(v *KafkaUserSpecAuthorizationArgs) KafkaUserSpecAuthorizationPtrInput {
+	return (*kafkaUserSpecAuthorizationPtrType)(v)
+}
+
+func (*kafkaUserSpecAuthorizationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecAuthorization)(nil)).Elem()
+}
+
+func (i *kafkaUserSpecAuthorizationPtrType) ToKafkaUserSpecAuthorizationPtrOutput() KafkaUserSpecAuthorizationPtrOutput {
+	return i.ToKafkaUserSpecAuthorizationPtrOutputWithContext(context.Background())
+}
+
+func (i *kafkaUserSpecAuthorizationPtrType) ToKafkaUserSpecAuthorizationPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthorizationPtrOutput)
+}
+
+// Authorization rules for this Kafka user.
+type KafkaUserSpecAuthorizationOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthorizationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthorization)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthorizationOutput) ToKafkaUserSpecAuthorizationOutput() KafkaUserSpecAuthorizationOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthorizationOutput) ToKafkaUserSpecAuthorizationOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthorizationOutput) ToKafkaUserSpecAuthorizationPtrOutput() KafkaUserSpecAuthorizationPtrOutput {
+	return o.ToKafkaUserSpecAuthorizationPtrOutputWithContext(context.Background())
+}
+
+func (o KafkaUserSpecAuthorizationOutput) ToKafkaUserSpecAuthorizationPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KafkaUserSpecAuthorization) *KafkaUserSpecAuthorization {
+		return &v
+	}).(KafkaUserSpecAuthorizationPtrOutput)
+}
+
+// List of ACL rules which should be applied to this user.
+func (o KafkaUserSpecAuthorizationOutput) Acls() KafkaUserSpecAuthorizationAclsArrayOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthorization) []KafkaUserSpecAuthorizationAcls { return v.Acls }).(KafkaUserSpecAuthorizationAclsArrayOutput)
+}
+
+// Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses the Kafka Admin API for managing the ACL rules.
+func (o KafkaUserSpecAuthorizationOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthorization) string { return v.Type }).(pulumi.StringOutput)
+}
+
+type KafkaUserSpecAuthorizationPtrOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthorizationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecAuthorization)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthorizationPtrOutput) ToKafkaUserSpecAuthorizationPtrOutput() KafkaUserSpecAuthorizationPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthorizationPtrOutput) ToKafkaUserSpecAuthorizationPtrOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthorizationPtrOutput) Elem() KafkaUserSpecAuthorizationOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthorization) KafkaUserSpecAuthorization {
+		if v != nil {
+			return *v
+		}
+		var ret KafkaUserSpecAuthorization
+		return ret
+	}).(KafkaUserSpecAuthorizationOutput)
+}
+
+// List of ACL rules which should be applied to this user.
+func (o KafkaUserSpecAuthorizationPtrOutput) Acls() KafkaUserSpecAuthorizationAclsArrayOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthorization) []KafkaUserSpecAuthorizationAcls {
+		if v == nil {
+			return nil
+		}
+		return v.Acls
+	}).(KafkaUserSpecAuthorizationAclsArrayOutput)
+}
+
+// Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses the Kafka Admin API for managing the ACL rules.
+func (o KafkaUserSpecAuthorizationPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecAuthorization) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
+type KafkaUserSpecAuthorizationAcls struct {
+	// The host from which the action described in the ACL rule is allowed or denied. If not set, it defaults to `*`, allowing or denying the action from any host.
+	Host *string `pulumi:"host"`
+	// Operation which will be allowed or denied. Supported operations are: Read, Write, Create, Delete, Alter, Describe, ClusterAction, AlterConfigs, DescribeConfigs, IdempotentWrite and All.
+	Operation *string `pulumi:"operation"`
+	// List of operations which will be allowed or denied. Supported operations are: Read, Write, Create, Delete, Alter, Describe, ClusterAction, AlterConfigs, DescribeConfigs, IdempotentWrite and All.
+	Operations []string `pulumi:"operations"`
+	// Indicates the resource for which given ACL rule applies.
+	Resource KafkaUserSpecAuthorizationAclsResource `pulumi:"resource"`
+	// The type of the rule. Currently the only supported type is `allow`. ACL rules with type `allow` are used to allow user to execute the specified operations. Default value is `allow`.
+	Type *string `pulumi:"type"`
+}
+
+// KafkaUserSpecAuthorizationAclsInput is an input type that accepts KafkaUserSpecAuthorizationAclsArgs and KafkaUserSpecAuthorizationAclsOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthorizationAclsInput` via:
+//
+//	KafkaUserSpecAuthorizationAclsArgs{...}
+type KafkaUserSpecAuthorizationAclsInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthorizationAclsOutput() KafkaUserSpecAuthorizationAclsOutput
+	ToKafkaUserSpecAuthorizationAclsOutputWithContext(context.Context) KafkaUserSpecAuthorizationAclsOutput
+}
+
+type KafkaUserSpecAuthorizationAclsArgs struct {
+	// The host from which the action described in the ACL rule is allowed or denied. If not set, it defaults to `*`, allowing or denying the action from any host.
+	Host pulumi.StringPtrInput `pulumi:"host"`
+	// Operation which will be allowed or denied. Supported operations are: Read, Write, Create, Delete, Alter, Describe, ClusterAction, AlterConfigs, DescribeConfigs, IdempotentWrite and All.
+	Operation pulumi.StringPtrInput `pulumi:"operation"`
+	// List of operations which will be allowed or denied. Supported operations are: Read, Write, Create, Delete, Alter, Describe, ClusterAction, AlterConfigs, DescribeConfigs, IdempotentWrite and All.
+	Operations pulumi.StringArrayInput `pulumi:"operations"`
+	// Indicates the resource for which given ACL rule applies.
+	Resource KafkaUserSpecAuthorizationAclsResourceInput `pulumi:"resource"`
+	// The type of the rule. Currently the only supported type is `allow`. ACL rules with type `allow` are used to allow user to execute the specified operations. Default value is `allow`.
+	Type pulumi.StringPtrInput `pulumi:"type"`
+}
+
+func (KafkaUserSpecAuthorizationAclsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthorizationAcls)(nil)).Elem()
+}
+
+func (i KafkaUserSpecAuthorizationAclsArgs) ToKafkaUserSpecAuthorizationAclsOutput() KafkaUserSpecAuthorizationAclsOutput {
+	return i.ToKafkaUserSpecAuthorizationAclsOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthorizationAclsArgs) ToKafkaUserSpecAuthorizationAclsOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationAclsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthorizationAclsOutput)
+}
+
+// KafkaUserSpecAuthorizationAclsArrayInput is an input type that accepts KafkaUserSpecAuthorizationAclsArray and KafkaUserSpecAuthorizationAclsArrayOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthorizationAclsArrayInput` via:
+//
+//	KafkaUserSpecAuthorizationAclsArray{ KafkaUserSpecAuthorizationAclsArgs{...} }
+type KafkaUserSpecAuthorizationAclsArrayInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthorizationAclsArrayOutput() KafkaUserSpecAuthorizationAclsArrayOutput
+	ToKafkaUserSpecAuthorizationAclsArrayOutputWithContext(context.Context) KafkaUserSpecAuthorizationAclsArrayOutput
+}
+
+type KafkaUserSpecAuthorizationAclsArray []KafkaUserSpecAuthorizationAclsInput
+
+func (KafkaUserSpecAuthorizationAclsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]KafkaUserSpecAuthorizationAcls)(nil)).Elem()
+}
+
+func (i KafkaUserSpecAuthorizationAclsArray) ToKafkaUserSpecAuthorizationAclsArrayOutput() KafkaUserSpecAuthorizationAclsArrayOutput {
+	return i.ToKafkaUserSpecAuthorizationAclsArrayOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthorizationAclsArray) ToKafkaUserSpecAuthorizationAclsArrayOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationAclsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthorizationAclsArrayOutput)
+}
+
+type KafkaUserSpecAuthorizationAclsOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthorizationAclsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthorizationAcls)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthorizationAclsOutput) ToKafkaUserSpecAuthorizationAclsOutput() KafkaUserSpecAuthorizationAclsOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthorizationAclsOutput) ToKafkaUserSpecAuthorizationAclsOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationAclsOutput {
+	return o
+}
+
+// The host from which the action described in the ACL rule is allowed or denied. If not set, it defaults to `*`, allowing or denying the action from any host.
+func (o KafkaUserSpecAuthorizationAclsOutput) Host() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthorizationAcls) *string { return v.Host }).(pulumi.StringPtrOutput)
+}
+
+// Operation which will be allowed or denied. Supported operations are: Read, Write, Create, Delete, Alter, Describe, ClusterAction, AlterConfigs, DescribeConfigs, IdempotentWrite and All.
+func (o KafkaUserSpecAuthorizationAclsOutput) Operation() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthorizationAcls) *string { return v.Operation }).(pulumi.StringPtrOutput)
+}
+
+// List of operations which will be allowed or denied. Supported operations are: Read, Write, Create, Delete, Alter, Describe, ClusterAction, AlterConfigs, DescribeConfigs, IdempotentWrite and All.
+func (o KafkaUserSpecAuthorizationAclsOutput) Operations() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthorizationAcls) []string { return v.Operations }).(pulumi.StringArrayOutput)
+}
+
+// Indicates the resource for which given ACL rule applies.
+func (o KafkaUserSpecAuthorizationAclsOutput) Resource() KafkaUserSpecAuthorizationAclsResourceOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthorizationAcls) KafkaUserSpecAuthorizationAclsResource { return v.Resource }).(KafkaUserSpecAuthorizationAclsResourceOutput)
+}
+
+// The type of the rule. Currently the only supported type is `allow`. ACL rules with type `allow` are used to allow user to execute the specified operations. Default value is `allow`.
+func (o KafkaUserSpecAuthorizationAclsOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthorizationAcls) *string { return v.Type }).(pulumi.StringPtrOutput)
+}
+
+type KafkaUserSpecAuthorizationAclsArrayOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthorizationAclsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]KafkaUserSpecAuthorizationAcls)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthorizationAclsArrayOutput) ToKafkaUserSpecAuthorizationAclsArrayOutput() KafkaUserSpecAuthorizationAclsArrayOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthorizationAclsArrayOutput) ToKafkaUserSpecAuthorizationAclsArrayOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationAclsArrayOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthorizationAclsArrayOutput) Index(i pulumi.IntInput) KafkaUserSpecAuthorizationAclsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) KafkaUserSpecAuthorizationAcls {
+		return vs[0].([]KafkaUserSpecAuthorizationAcls)[vs[1].(int)]
+	}).(KafkaUserSpecAuthorizationAclsOutput)
+}
+
+// Indicates the resource for which given ACL rule applies.
+type KafkaUserSpecAuthorizationAclsResource struct {
+	// Name of resource for which given ACL rule applies. Can be combined with `patternType` field to use prefix pattern.
+	Name *string `pulumi:"name"`
+	// Describes the pattern used in the resource field. The supported types are `literal` and `prefix`. With `literal` pattern type, the resource field will be used as a definition of a full name. With `prefix` pattern type, the resource name will be used only as a prefix. Default value is `literal`.
+	PatternType *string `pulumi:"patternType"`
+	// Resource type. The available resource types are `topic`, `group`, `cluster`, and `transactionalId`.
+	Type string `pulumi:"type"`
+}
+
+// KafkaUserSpecAuthorizationAclsResourceInput is an input type that accepts KafkaUserSpecAuthorizationAclsResourceArgs and KafkaUserSpecAuthorizationAclsResourceOutput values.
+// You can construct a concrete instance of `KafkaUserSpecAuthorizationAclsResourceInput` via:
+//
+//	KafkaUserSpecAuthorizationAclsResourceArgs{...}
+type KafkaUserSpecAuthorizationAclsResourceInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecAuthorizationAclsResourceOutput() KafkaUserSpecAuthorizationAclsResourceOutput
+	ToKafkaUserSpecAuthorizationAclsResourceOutputWithContext(context.Context) KafkaUserSpecAuthorizationAclsResourceOutput
+}
+
+// Indicates the resource for which given ACL rule applies.
+type KafkaUserSpecAuthorizationAclsResourceArgs struct {
+	// Name of resource for which given ACL rule applies. Can be combined with `patternType` field to use prefix pattern.
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Describes the pattern used in the resource field. The supported types are `literal` and `prefix`. With `literal` pattern type, the resource field will be used as a definition of a full name. With `prefix` pattern type, the resource name will be used only as a prefix. Default value is `literal`.
+	PatternType pulumi.StringPtrInput `pulumi:"patternType"`
+	// Resource type. The available resource types are `topic`, `group`, `cluster`, and `transactionalId`.
+	Type pulumi.StringInput `pulumi:"type"`
+}
+
+func (KafkaUserSpecAuthorizationAclsResourceArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthorizationAclsResource)(nil)).Elem()
+}
+
+func (i KafkaUserSpecAuthorizationAclsResourceArgs) ToKafkaUserSpecAuthorizationAclsResourceOutput() KafkaUserSpecAuthorizationAclsResourceOutput {
+	return i.ToKafkaUserSpecAuthorizationAclsResourceOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecAuthorizationAclsResourceArgs) ToKafkaUserSpecAuthorizationAclsResourceOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationAclsResourceOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecAuthorizationAclsResourceOutput)
+}
+
+// Indicates the resource for which given ACL rule applies.
+type KafkaUserSpecAuthorizationAclsResourceOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecAuthorizationAclsResourceOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecAuthorizationAclsResource)(nil)).Elem()
+}
+
+func (o KafkaUserSpecAuthorizationAclsResourceOutput) ToKafkaUserSpecAuthorizationAclsResourceOutput() KafkaUserSpecAuthorizationAclsResourceOutput {
+	return o
+}
+
+func (o KafkaUserSpecAuthorizationAclsResourceOutput) ToKafkaUserSpecAuthorizationAclsResourceOutputWithContext(ctx context.Context) KafkaUserSpecAuthorizationAclsResourceOutput {
+	return o
+}
+
+// Name of resource for which given ACL rule applies. Can be combined with `patternType` field to use prefix pattern.
+func (o KafkaUserSpecAuthorizationAclsResourceOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthorizationAclsResource) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// Describes the pattern used in the resource field. The supported types are `literal` and `prefix`. With `literal` pattern type, the resource field will be used as a definition of a full name. With `prefix` pattern type, the resource name will be used only as a prefix. Default value is `literal`.
+func (o KafkaUserSpecAuthorizationAclsResourceOutput) PatternType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthorizationAclsResource) *string { return v.PatternType }).(pulumi.StringPtrOutput)
+}
+
+// Resource type. The available resource types are `topic`, `group`, `cluster`, and `transactionalId`.
+func (o KafkaUserSpecAuthorizationAclsResourceOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v KafkaUserSpecAuthorizationAclsResource) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// Quotas on requests to control the broker resources used by clients. Network bandwidth and request rate quotas can be enforced.Kafka documentation for Kafka User quotas can be found at http://kafka.apache.org/documentation/#design_quotas.
+type KafkaUserSpecQuotas struct {
+	// A quota on the maximum bytes per-second that each client group can fetch from a broker before the clients in the group are throttled. Defined on a per-broker basis.
+	ConsumerByteRate *int `pulumi:"consumerByteRate"`
+	// A quota on the rate at which mutations are accepted for the create topics request, the create partitions request and the delete topics request. The rate is accumulated by the number of partitions created or deleted.
+	ControllerMutationRate *float64 `pulumi:"controllerMutationRate"`
+	// A quota on the maximum bytes per-second that each client group can publish to a broker before the clients in the group are throttled. Defined on a per-broker basis.
+	ProducerByteRate *int `pulumi:"producerByteRate"`
+	// A quota on the maximum CPU utilization of each client group as a percentage of network and I/O threads.
+	RequestPercentage *int `pulumi:"requestPercentage"`
+}
+
+// KafkaUserSpecQuotasInput is an input type that accepts KafkaUserSpecQuotasArgs and KafkaUserSpecQuotasOutput values.
+// You can construct a concrete instance of `KafkaUserSpecQuotasInput` via:
+//
+//	KafkaUserSpecQuotasArgs{...}
+type KafkaUserSpecQuotasInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecQuotasOutput() KafkaUserSpecQuotasOutput
+	ToKafkaUserSpecQuotasOutputWithContext(context.Context) KafkaUserSpecQuotasOutput
+}
+
+// Quotas on requests to control the broker resources used by clients. Network bandwidth and request rate quotas can be enforced.Kafka documentation for Kafka User quotas can be found at http://kafka.apache.org/documentation/#design_quotas.
+type KafkaUserSpecQuotasArgs struct {
+	// A quota on the maximum bytes per-second that each client group can fetch from a broker before the clients in the group are throttled. Defined on a per-broker basis.
+	ConsumerByteRate pulumi.IntPtrInput `pulumi:"consumerByteRate"`
+	// A quota on the rate at which mutations are accepted for the create topics request, the create partitions request and the delete topics request. The rate is accumulated by the number of partitions created or deleted.
+	ControllerMutationRate pulumi.Float64PtrInput `pulumi:"controllerMutationRate"`
+	// A quota on the maximum bytes per-second that each client group can publish to a broker before the clients in the group are throttled. Defined on a per-broker basis.
+	ProducerByteRate pulumi.IntPtrInput `pulumi:"producerByteRate"`
+	// A quota on the maximum CPU utilization of each client group as a percentage of network and I/O threads.
+	RequestPercentage pulumi.IntPtrInput `pulumi:"requestPercentage"`
+}
+
+func (KafkaUserSpecQuotasArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecQuotas)(nil)).Elem()
+}
+
+func (i KafkaUserSpecQuotasArgs) ToKafkaUserSpecQuotasOutput() KafkaUserSpecQuotasOutput {
+	return i.ToKafkaUserSpecQuotasOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecQuotasArgs) ToKafkaUserSpecQuotasOutputWithContext(ctx context.Context) KafkaUserSpecQuotasOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecQuotasOutput)
+}
+
+func (i KafkaUserSpecQuotasArgs) ToKafkaUserSpecQuotasPtrOutput() KafkaUserSpecQuotasPtrOutput {
+	return i.ToKafkaUserSpecQuotasPtrOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecQuotasArgs) ToKafkaUserSpecQuotasPtrOutputWithContext(ctx context.Context) KafkaUserSpecQuotasPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecQuotasOutput).ToKafkaUserSpecQuotasPtrOutputWithContext(ctx)
+}
+
+// KafkaUserSpecQuotasPtrInput is an input type that accepts KafkaUserSpecQuotasArgs, KafkaUserSpecQuotasPtr and KafkaUserSpecQuotasPtrOutput values.
+// You can construct a concrete instance of `KafkaUserSpecQuotasPtrInput` via:
+//
+//	        KafkaUserSpecQuotasArgs{...}
+//
+//	or:
+//
+//	        nil
+type KafkaUserSpecQuotasPtrInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecQuotasPtrOutput() KafkaUserSpecQuotasPtrOutput
+	ToKafkaUserSpecQuotasPtrOutputWithContext(context.Context) KafkaUserSpecQuotasPtrOutput
+}
+
+type kafkaUserSpecQuotasPtrType KafkaUserSpecQuotasArgs
+
+func KafkaUserSpecQuotasPtr(v *KafkaUserSpecQuotasArgs) KafkaUserSpecQuotasPtrInput {
+	return (*kafkaUserSpecQuotasPtrType)(v)
+}
+
+func (*kafkaUserSpecQuotasPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecQuotas)(nil)).Elem()
+}
+
+func (i *kafkaUserSpecQuotasPtrType) ToKafkaUserSpecQuotasPtrOutput() KafkaUserSpecQuotasPtrOutput {
+	return i.ToKafkaUserSpecQuotasPtrOutputWithContext(context.Background())
+}
+
+func (i *kafkaUserSpecQuotasPtrType) ToKafkaUserSpecQuotasPtrOutputWithContext(ctx context.Context) KafkaUserSpecQuotasPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecQuotasPtrOutput)
+}
+
+// Quotas on requests to control the broker resources used by clients. Network bandwidth and request rate quotas can be enforced.Kafka documentation for Kafka User quotas can be found at http://kafka.apache.org/documentation/#design_quotas.
+type KafkaUserSpecQuotasOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecQuotasOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecQuotas)(nil)).Elem()
+}
+
+func (o KafkaUserSpecQuotasOutput) ToKafkaUserSpecQuotasOutput() KafkaUserSpecQuotasOutput {
+	return o
+}
+
+func (o KafkaUserSpecQuotasOutput) ToKafkaUserSpecQuotasOutputWithContext(ctx context.Context) KafkaUserSpecQuotasOutput {
+	return o
+}
+
+func (o KafkaUserSpecQuotasOutput) ToKafkaUserSpecQuotasPtrOutput() KafkaUserSpecQuotasPtrOutput {
+	return o.ToKafkaUserSpecQuotasPtrOutputWithContext(context.Background())
+}
+
+func (o KafkaUserSpecQuotasOutput) ToKafkaUserSpecQuotasPtrOutputWithContext(ctx context.Context) KafkaUserSpecQuotasPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KafkaUserSpecQuotas) *KafkaUserSpecQuotas {
+		return &v
+	}).(KafkaUserSpecQuotasPtrOutput)
+}
+
+// A quota on the maximum bytes per-second that each client group can fetch from a broker before the clients in the group are throttled. Defined on a per-broker basis.
+func (o KafkaUserSpecQuotasOutput) ConsumerByteRate() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecQuotas) *int { return v.ConsumerByteRate }).(pulumi.IntPtrOutput)
+}
+
+// A quota on the rate at which mutations are accepted for the create topics request, the create partitions request and the delete topics request. The rate is accumulated by the number of partitions created or deleted.
+func (o KafkaUserSpecQuotasOutput) ControllerMutationRate() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecQuotas) *float64 { return v.ControllerMutationRate }).(pulumi.Float64PtrOutput)
+}
+
+// A quota on the maximum bytes per-second that each client group can publish to a broker before the clients in the group are throttled. Defined on a per-broker basis.
+func (o KafkaUserSpecQuotasOutput) ProducerByteRate() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecQuotas) *int { return v.ProducerByteRate }).(pulumi.IntPtrOutput)
+}
+
+// A quota on the maximum CPU utilization of each client group as a percentage of network and I/O threads.
+func (o KafkaUserSpecQuotasOutput) RequestPercentage() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecQuotas) *int { return v.RequestPercentage }).(pulumi.IntPtrOutput)
+}
+
+type KafkaUserSpecQuotasPtrOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecQuotasPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecQuotas)(nil)).Elem()
+}
+
+func (o KafkaUserSpecQuotasPtrOutput) ToKafkaUserSpecQuotasPtrOutput() KafkaUserSpecQuotasPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecQuotasPtrOutput) ToKafkaUserSpecQuotasPtrOutputWithContext(ctx context.Context) KafkaUserSpecQuotasPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecQuotasPtrOutput) Elem() KafkaUserSpecQuotasOutput {
+	return o.ApplyT(func(v *KafkaUserSpecQuotas) KafkaUserSpecQuotas {
+		if v != nil {
+			return *v
+		}
+		var ret KafkaUserSpecQuotas
+		return ret
+	}).(KafkaUserSpecQuotasOutput)
+}
+
+// A quota on the maximum bytes per-second that each client group can fetch from a broker before the clients in the group are throttled. Defined on a per-broker basis.
+func (o KafkaUserSpecQuotasPtrOutput) ConsumerByteRate() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecQuotas) *int {
+		if v == nil {
+			return nil
+		}
+		return v.ConsumerByteRate
+	}).(pulumi.IntPtrOutput)
+}
+
+// A quota on the rate at which mutations are accepted for the create topics request, the create partitions request and the delete topics request. The rate is accumulated by the number of partitions created or deleted.
+func (o KafkaUserSpecQuotasPtrOutput) ControllerMutationRate() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecQuotas) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.ControllerMutationRate
+	}).(pulumi.Float64PtrOutput)
+}
+
+// A quota on the maximum bytes per-second that each client group can publish to a broker before the clients in the group are throttled. Defined on a per-broker basis.
+func (o KafkaUserSpecQuotasPtrOutput) ProducerByteRate() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecQuotas) *int {
+		if v == nil {
+			return nil
+		}
+		return v.ProducerByteRate
+	}).(pulumi.IntPtrOutput)
+}
+
+// A quota on the maximum CPU utilization of each client group as a percentage of network and I/O threads.
+func (o KafkaUserSpecQuotasPtrOutput) RequestPercentage() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecQuotas) *int {
+		if v == nil {
+			return nil
+		}
+		return v.RequestPercentage
+	}).(pulumi.IntPtrOutput)
+}
+
+// Template to specify how Kafka User `Secrets` are generated.
+type KafkaUserSpecTemplate struct {
+	// Template for KafkaUser resources. The template allows users to specify how the `Secret` with password or TLS certificates is generated.
+	Secret *KafkaUserSpecTemplateSecret `pulumi:"secret"`
+}
+
+// KafkaUserSpecTemplateInput is an input type that accepts KafkaUserSpecTemplateArgs and KafkaUserSpecTemplateOutput values.
+// You can construct a concrete instance of `KafkaUserSpecTemplateInput` via:
+//
+//	KafkaUserSpecTemplateArgs{...}
+type KafkaUserSpecTemplateInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecTemplateOutput() KafkaUserSpecTemplateOutput
+	ToKafkaUserSpecTemplateOutputWithContext(context.Context) KafkaUserSpecTemplateOutput
+}
+
+// Template to specify how Kafka User `Secrets` are generated.
+type KafkaUserSpecTemplateArgs struct {
+	// Template for KafkaUser resources. The template allows users to specify how the `Secret` with password or TLS certificates is generated.
+	Secret KafkaUserSpecTemplateSecretPtrInput `pulumi:"secret"`
+}
+
+func (KafkaUserSpecTemplateArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecTemplate)(nil)).Elem()
+}
+
+func (i KafkaUserSpecTemplateArgs) ToKafkaUserSpecTemplateOutput() KafkaUserSpecTemplateOutput {
+	return i.ToKafkaUserSpecTemplateOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecTemplateArgs) ToKafkaUserSpecTemplateOutputWithContext(ctx context.Context) KafkaUserSpecTemplateOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecTemplateOutput)
+}
+
+func (i KafkaUserSpecTemplateArgs) ToKafkaUserSpecTemplatePtrOutput() KafkaUserSpecTemplatePtrOutput {
+	return i.ToKafkaUserSpecTemplatePtrOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecTemplateArgs) ToKafkaUserSpecTemplatePtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecTemplateOutput).ToKafkaUserSpecTemplatePtrOutputWithContext(ctx)
+}
+
+// KafkaUserSpecTemplatePtrInput is an input type that accepts KafkaUserSpecTemplateArgs, KafkaUserSpecTemplatePtr and KafkaUserSpecTemplatePtrOutput values.
+// You can construct a concrete instance of `KafkaUserSpecTemplatePtrInput` via:
+//
+//	        KafkaUserSpecTemplateArgs{...}
+//
+//	or:
+//
+//	        nil
+type KafkaUserSpecTemplatePtrInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecTemplatePtrOutput() KafkaUserSpecTemplatePtrOutput
+	ToKafkaUserSpecTemplatePtrOutputWithContext(context.Context) KafkaUserSpecTemplatePtrOutput
+}
+
+type kafkaUserSpecTemplatePtrType KafkaUserSpecTemplateArgs
+
+func KafkaUserSpecTemplatePtr(v *KafkaUserSpecTemplateArgs) KafkaUserSpecTemplatePtrInput {
+	return (*kafkaUserSpecTemplatePtrType)(v)
+}
+
+func (*kafkaUserSpecTemplatePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecTemplate)(nil)).Elem()
+}
+
+func (i *kafkaUserSpecTemplatePtrType) ToKafkaUserSpecTemplatePtrOutput() KafkaUserSpecTemplatePtrOutput {
+	return i.ToKafkaUserSpecTemplatePtrOutputWithContext(context.Background())
+}
+
+func (i *kafkaUserSpecTemplatePtrType) ToKafkaUserSpecTemplatePtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecTemplatePtrOutput)
+}
+
+// Template to specify how Kafka User `Secrets` are generated.
+type KafkaUserSpecTemplateOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecTemplateOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecTemplate)(nil)).Elem()
+}
+
+func (o KafkaUserSpecTemplateOutput) ToKafkaUserSpecTemplateOutput() KafkaUserSpecTemplateOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplateOutput) ToKafkaUserSpecTemplateOutputWithContext(ctx context.Context) KafkaUserSpecTemplateOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplateOutput) ToKafkaUserSpecTemplatePtrOutput() KafkaUserSpecTemplatePtrOutput {
+	return o.ToKafkaUserSpecTemplatePtrOutputWithContext(context.Background())
+}
+
+func (o KafkaUserSpecTemplateOutput) ToKafkaUserSpecTemplatePtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplatePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KafkaUserSpecTemplate) *KafkaUserSpecTemplate {
+		return &v
+	}).(KafkaUserSpecTemplatePtrOutput)
+}
+
+// Template for KafkaUser resources. The template allows users to specify how the `Secret` with password or TLS certificates is generated.
+func (o KafkaUserSpecTemplateOutput) Secret() KafkaUserSpecTemplateSecretPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecTemplate) *KafkaUserSpecTemplateSecret { return v.Secret }).(KafkaUserSpecTemplateSecretPtrOutput)
+}
+
+type KafkaUserSpecTemplatePtrOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecTemplatePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecTemplate)(nil)).Elem()
+}
+
+func (o KafkaUserSpecTemplatePtrOutput) ToKafkaUserSpecTemplatePtrOutput() KafkaUserSpecTemplatePtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplatePtrOutput) ToKafkaUserSpecTemplatePtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplatePtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplatePtrOutput) Elem() KafkaUserSpecTemplateOutput {
+	return o.ApplyT(func(v *KafkaUserSpecTemplate) KafkaUserSpecTemplate {
+		if v != nil {
+			return *v
+		}
+		var ret KafkaUserSpecTemplate
+		return ret
+	}).(KafkaUserSpecTemplateOutput)
+}
+
+// Template for KafkaUser resources. The template allows users to specify how the `Secret` with password or TLS certificates is generated.
+func (o KafkaUserSpecTemplatePtrOutput) Secret() KafkaUserSpecTemplateSecretPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecTemplate) *KafkaUserSpecTemplateSecret {
+		if v == nil {
+			return nil
+		}
+		return v.Secret
+	}).(KafkaUserSpecTemplateSecretPtrOutput)
+}
+
+// Template for KafkaUser resources. The template allows users to specify how the `Secret` with password or TLS certificates is generated.
+type KafkaUserSpecTemplateSecret struct {
+	// Metadata applied to the resource.
+	Metadata *KafkaUserSpecTemplateSecretMetadata `pulumi:"metadata"`
+}
+
+// KafkaUserSpecTemplateSecretInput is an input type that accepts KafkaUserSpecTemplateSecretArgs and KafkaUserSpecTemplateSecretOutput values.
+// You can construct a concrete instance of `KafkaUserSpecTemplateSecretInput` via:
+//
+//	KafkaUserSpecTemplateSecretArgs{...}
+type KafkaUserSpecTemplateSecretInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecTemplateSecretOutput() KafkaUserSpecTemplateSecretOutput
+	ToKafkaUserSpecTemplateSecretOutputWithContext(context.Context) KafkaUserSpecTemplateSecretOutput
+}
+
+// Template for KafkaUser resources. The template allows users to specify how the `Secret` with password or TLS certificates is generated.
+type KafkaUserSpecTemplateSecretArgs struct {
+	// Metadata applied to the resource.
+	Metadata KafkaUserSpecTemplateSecretMetadataPtrInput `pulumi:"metadata"`
+}
+
+func (KafkaUserSpecTemplateSecretArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecTemplateSecret)(nil)).Elem()
+}
+
+func (i KafkaUserSpecTemplateSecretArgs) ToKafkaUserSpecTemplateSecretOutput() KafkaUserSpecTemplateSecretOutput {
+	return i.ToKafkaUserSpecTemplateSecretOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecTemplateSecretArgs) ToKafkaUserSpecTemplateSecretOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecTemplateSecretOutput)
+}
+
+func (i KafkaUserSpecTemplateSecretArgs) ToKafkaUserSpecTemplateSecretPtrOutput() KafkaUserSpecTemplateSecretPtrOutput {
+	return i.ToKafkaUserSpecTemplateSecretPtrOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecTemplateSecretArgs) ToKafkaUserSpecTemplateSecretPtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecTemplateSecretOutput).ToKafkaUserSpecTemplateSecretPtrOutputWithContext(ctx)
+}
+
+// KafkaUserSpecTemplateSecretPtrInput is an input type that accepts KafkaUserSpecTemplateSecretArgs, KafkaUserSpecTemplateSecretPtr and KafkaUserSpecTemplateSecretPtrOutput values.
+// You can construct a concrete instance of `KafkaUserSpecTemplateSecretPtrInput` via:
+//
+//	        KafkaUserSpecTemplateSecretArgs{...}
+//
+//	or:
+//
+//	        nil
+type KafkaUserSpecTemplateSecretPtrInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecTemplateSecretPtrOutput() KafkaUserSpecTemplateSecretPtrOutput
+	ToKafkaUserSpecTemplateSecretPtrOutputWithContext(context.Context) KafkaUserSpecTemplateSecretPtrOutput
+}
+
+type kafkaUserSpecTemplateSecretPtrType KafkaUserSpecTemplateSecretArgs
+
+func KafkaUserSpecTemplateSecretPtr(v *KafkaUserSpecTemplateSecretArgs) KafkaUserSpecTemplateSecretPtrInput {
+	return (*kafkaUserSpecTemplateSecretPtrType)(v)
+}
+
+func (*kafkaUserSpecTemplateSecretPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecTemplateSecret)(nil)).Elem()
+}
+
+func (i *kafkaUserSpecTemplateSecretPtrType) ToKafkaUserSpecTemplateSecretPtrOutput() KafkaUserSpecTemplateSecretPtrOutput {
+	return i.ToKafkaUserSpecTemplateSecretPtrOutputWithContext(context.Background())
+}
+
+func (i *kafkaUserSpecTemplateSecretPtrType) ToKafkaUserSpecTemplateSecretPtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecTemplateSecretPtrOutput)
+}
+
+// Template for KafkaUser resources. The template allows users to specify how the `Secret` with password or TLS certificates is generated.
+type KafkaUserSpecTemplateSecretOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecTemplateSecretOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecTemplateSecret)(nil)).Elem()
+}
+
+func (o KafkaUserSpecTemplateSecretOutput) ToKafkaUserSpecTemplateSecretOutput() KafkaUserSpecTemplateSecretOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplateSecretOutput) ToKafkaUserSpecTemplateSecretOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplateSecretOutput) ToKafkaUserSpecTemplateSecretPtrOutput() KafkaUserSpecTemplateSecretPtrOutput {
+	return o.ToKafkaUserSpecTemplateSecretPtrOutputWithContext(context.Background())
+}
+
+func (o KafkaUserSpecTemplateSecretOutput) ToKafkaUserSpecTemplateSecretPtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KafkaUserSpecTemplateSecret) *KafkaUserSpecTemplateSecret {
+		return &v
+	}).(KafkaUserSpecTemplateSecretPtrOutput)
+}
+
+// Metadata applied to the resource.
+func (o KafkaUserSpecTemplateSecretOutput) Metadata() KafkaUserSpecTemplateSecretMetadataPtrOutput {
+	return o.ApplyT(func(v KafkaUserSpecTemplateSecret) *KafkaUserSpecTemplateSecretMetadata { return v.Metadata }).(KafkaUserSpecTemplateSecretMetadataPtrOutput)
+}
+
+type KafkaUserSpecTemplateSecretPtrOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecTemplateSecretPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecTemplateSecret)(nil)).Elem()
+}
+
+func (o KafkaUserSpecTemplateSecretPtrOutput) ToKafkaUserSpecTemplateSecretPtrOutput() KafkaUserSpecTemplateSecretPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplateSecretPtrOutput) ToKafkaUserSpecTemplateSecretPtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplateSecretPtrOutput) Elem() KafkaUserSpecTemplateSecretOutput {
+	return o.ApplyT(func(v *KafkaUserSpecTemplateSecret) KafkaUserSpecTemplateSecret {
+		if v != nil {
+			return *v
+		}
+		var ret KafkaUserSpecTemplateSecret
+		return ret
+	}).(KafkaUserSpecTemplateSecretOutput)
+}
+
+// Metadata applied to the resource.
+func (o KafkaUserSpecTemplateSecretPtrOutput) Metadata() KafkaUserSpecTemplateSecretMetadataPtrOutput {
+	return o.ApplyT(func(v *KafkaUserSpecTemplateSecret) *KafkaUserSpecTemplateSecretMetadata {
+		if v == nil {
+			return nil
+		}
+		return v.Metadata
+	}).(KafkaUserSpecTemplateSecretMetadataPtrOutput)
+}
+
+// Metadata applied to the resource.
+type KafkaUserSpecTemplateSecretMetadata struct {
+	// Annotations added to the Kubernetes resource.
+	Annotations map[string]string `pulumi:"annotations"`
+	// Labels added to the Kubernetes resource.
+	Labels map[string]string `pulumi:"labels"`
+}
+
+// KafkaUserSpecTemplateSecretMetadataInput is an input type that accepts KafkaUserSpecTemplateSecretMetadataArgs and KafkaUserSpecTemplateSecretMetadataOutput values.
+// You can construct a concrete instance of `KafkaUserSpecTemplateSecretMetadataInput` via:
+//
+//	KafkaUserSpecTemplateSecretMetadataArgs{...}
+type KafkaUserSpecTemplateSecretMetadataInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecTemplateSecretMetadataOutput() KafkaUserSpecTemplateSecretMetadataOutput
+	ToKafkaUserSpecTemplateSecretMetadataOutputWithContext(context.Context) KafkaUserSpecTemplateSecretMetadataOutput
+}
+
+// Metadata applied to the resource.
+type KafkaUserSpecTemplateSecretMetadataArgs struct {
+	// Annotations added to the Kubernetes resource.
+	Annotations pulumi.StringMapInput `pulumi:"annotations"`
+	// Labels added to the Kubernetes resource.
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+}
+
+func (KafkaUserSpecTemplateSecretMetadataArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecTemplateSecretMetadata)(nil)).Elem()
+}
+
+func (i KafkaUserSpecTemplateSecretMetadataArgs) ToKafkaUserSpecTemplateSecretMetadataOutput() KafkaUserSpecTemplateSecretMetadataOutput {
+	return i.ToKafkaUserSpecTemplateSecretMetadataOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecTemplateSecretMetadataArgs) ToKafkaUserSpecTemplateSecretMetadataOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretMetadataOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecTemplateSecretMetadataOutput)
+}
+
+func (i KafkaUserSpecTemplateSecretMetadataArgs) ToKafkaUserSpecTemplateSecretMetadataPtrOutput() KafkaUserSpecTemplateSecretMetadataPtrOutput {
+	return i.ToKafkaUserSpecTemplateSecretMetadataPtrOutputWithContext(context.Background())
+}
+
+func (i KafkaUserSpecTemplateSecretMetadataArgs) ToKafkaUserSpecTemplateSecretMetadataPtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretMetadataPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecTemplateSecretMetadataOutput).ToKafkaUserSpecTemplateSecretMetadataPtrOutputWithContext(ctx)
+}
+
+// KafkaUserSpecTemplateSecretMetadataPtrInput is an input type that accepts KafkaUserSpecTemplateSecretMetadataArgs, KafkaUserSpecTemplateSecretMetadataPtr and KafkaUserSpecTemplateSecretMetadataPtrOutput values.
+// You can construct a concrete instance of `KafkaUserSpecTemplateSecretMetadataPtrInput` via:
+//
+//	        KafkaUserSpecTemplateSecretMetadataArgs{...}
+//
+//	or:
+//
+//	        nil
+type KafkaUserSpecTemplateSecretMetadataPtrInput interface {
+	pulumi.Input
+
+	ToKafkaUserSpecTemplateSecretMetadataPtrOutput() KafkaUserSpecTemplateSecretMetadataPtrOutput
+	ToKafkaUserSpecTemplateSecretMetadataPtrOutputWithContext(context.Context) KafkaUserSpecTemplateSecretMetadataPtrOutput
+}
+
+type kafkaUserSpecTemplateSecretMetadataPtrType KafkaUserSpecTemplateSecretMetadataArgs
+
+func KafkaUserSpecTemplateSecretMetadataPtr(v *KafkaUserSpecTemplateSecretMetadataArgs) KafkaUserSpecTemplateSecretMetadataPtrInput {
+	return (*kafkaUserSpecTemplateSecretMetadataPtrType)(v)
+}
+
+func (*kafkaUserSpecTemplateSecretMetadataPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecTemplateSecretMetadata)(nil)).Elem()
+}
+
+func (i *kafkaUserSpecTemplateSecretMetadataPtrType) ToKafkaUserSpecTemplateSecretMetadataPtrOutput() KafkaUserSpecTemplateSecretMetadataPtrOutput {
+	return i.ToKafkaUserSpecTemplateSecretMetadataPtrOutputWithContext(context.Background())
+}
+
+func (i *kafkaUserSpecTemplateSecretMetadataPtrType) ToKafkaUserSpecTemplateSecretMetadataPtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretMetadataPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KafkaUserSpecTemplateSecretMetadataPtrOutput)
+}
+
+// Metadata applied to the resource.
+type KafkaUserSpecTemplateSecretMetadataOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecTemplateSecretMetadataOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KafkaUserSpecTemplateSecretMetadata)(nil)).Elem()
+}
+
+func (o KafkaUserSpecTemplateSecretMetadataOutput) ToKafkaUserSpecTemplateSecretMetadataOutput() KafkaUserSpecTemplateSecretMetadataOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplateSecretMetadataOutput) ToKafkaUserSpecTemplateSecretMetadataOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretMetadataOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplateSecretMetadataOutput) ToKafkaUserSpecTemplateSecretMetadataPtrOutput() KafkaUserSpecTemplateSecretMetadataPtrOutput {
+	return o.ToKafkaUserSpecTemplateSecretMetadataPtrOutputWithContext(context.Background())
+}
+
+func (o KafkaUserSpecTemplateSecretMetadataOutput) ToKafkaUserSpecTemplateSecretMetadataPtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretMetadataPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KafkaUserSpecTemplateSecretMetadata) *KafkaUserSpecTemplateSecretMetadata {
+		return &v
+	}).(KafkaUserSpecTemplateSecretMetadataPtrOutput)
+}
+
+// Annotations added to the Kubernetes resource.
+func (o KafkaUserSpecTemplateSecretMetadataOutput) Annotations() pulumi.StringMapOutput {
+	return o.ApplyT(func(v KafkaUserSpecTemplateSecretMetadata) map[string]string { return v.Annotations }).(pulumi.StringMapOutput)
+}
+
+// Labels added to the Kubernetes resource.
+func (o KafkaUserSpecTemplateSecretMetadataOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v KafkaUserSpecTemplateSecretMetadata) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+type KafkaUserSpecTemplateSecretMetadataPtrOutput struct{ *pulumi.OutputState }
+
+func (KafkaUserSpecTemplateSecretMetadataPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KafkaUserSpecTemplateSecretMetadata)(nil)).Elem()
+}
+
+func (o KafkaUserSpecTemplateSecretMetadataPtrOutput) ToKafkaUserSpecTemplateSecretMetadataPtrOutput() KafkaUserSpecTemplateSecretMetadataPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplateSecretMetadataPtrOutput) ToKafkaUserSpecTemplateSecretMetadataPtrOutputWithContext(ctx context.Context) KafkaUserSpecTemplateSecretMetadataPtrOutput {
+	return o
+}
+
+func (o KafkaUserSpecTemplateSecretMetadataPtrOutput) Elem() KafkaUserSpecTemplateSecretMetadataOutput {
+	return o.ApplyT(func(v *KafkaUserSpecTemplateSecretMetadata) KafkaUserSpecTemplateSecretMetadata {
+		if v != nil {
+			return *v
+		}
+		var ret KafkaUserSpecTemplateSecretMetadata
+		return ret
+	}).(KafkaUserSpecTemplateSecretMetadataOutput)
+}
+
+// Annotations added to the Kubernetes resource.
+func (o KafkaUserSpecTemplateSecretMetadataPtrOutput) Annotations() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *KafkaUserSpecTemplateSecretMetadata) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Annotations
+	}).(pulumi.StringMapOutput)
+}
+
+// Labels added to the Kubernetes resource.
+func (o KafkaUserSpecTemplateSecretMetadataPtrOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *KafkaUserSpecTemplateSecretMetadata) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringMapOutput)
+}
+
+// Annotations added to the Kubernetes resource.
+type KafkaUserSpecTemplateSecretMetadataAnnotations struct {
+}
+
 // Labels added to the Kubernetes resource.
 type KafkaUserSpecTemplateSecretMetadataLabels struct {
 }
@@ -348,10 +2208,56 @@ func (o KafkaUserStatusConditionsArrayOutput) Index(i pulumi.IntInput) KafkaUser
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecInput)(nil)).Elem(), KafkaUserSpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecPtrInput)(nil)).Elem(), KafkaUserSpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthenticationInput)(nil)).Elem(), KafkaUserSpecAuthenticationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthenticationPtrInput)(nil)).Elem(), KafkaUserSpecAuthenticationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthenticationPasswordInput)(nil)).Elem(), KafkaUserSpecAuthenticationPasswordArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthenticationPasswordPtrInput)(nil)).Elem(), KafkaUserSpecAuthenticationPasswordArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthenticationPasswordValueFromInput)(nil)).Elem(), KafkaUserSpecAuthenticationPasswordValueFromArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthenticationPasswordValueFromPtrInput)(nil)).Elem(), KafkaUserSpecAuthenticationPasswordValueFromArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefInput)(nil)).Elem(), KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrInput)(nil)).Elem(), KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthorizationInput)(nil)).Elem(), KafkaUserSpecAuthorizationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthorizationPtrInput)(nil)).Elem(), KafkaUserSpecAuthorizationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthorizationAclsInput)(nil)).Elem(), KafkaUserSpecAuthorizationAclsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthorizationAclsArrayInput)(nil)).Elem(), KafkaUserSpecAuthorizationAclsArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecAuthorizationAclsResourceInput)(nil)).Elem(), KafkaUserSpecAuthorizationAclsResourceArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecQuotasInput)(nil)).Elem(), KafkaUserSpecQuotasArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecQuotasPtrInput)(nil)).Elem(), KafkaUserSpecQuotasArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecTemplateInput)(nil)).Elem(), KafkaUserSpecTemplateArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecTemplatePtrInput)(nil)).Elem(), KafkaUserSpecTemplateArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecTemplateSecretInput)(nil)).Elem(), KafkaUserSpecTemplateSecretArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecTemplateSecretPtrInput)(nil)).Elem(), KafkaUserSpecTemplateSecretArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecTemplateSecretMetadataInput)(nil)).Elem(), KafkaUserSpecTemplateSecretMetadataArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserSpecTemplateSecretMetadataPtrInput)(nil)).Elem(), KafkaUserSpecTemplateSecretMetadataArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserStatusInput)(nil)).Elem(), KafkaUserStatusArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserStatusPtrInput)(nil)).Elem(), KafkaUserStatusArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserStatusConditionsInput)(nil)).Elem(), KafkaUserStatusConditionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KafkaUserStatusConditionsArrayInput)(nil)).Elem(), KafkaUserStatusConditionsArray{})
+	pulumi.RegisterOutputType(KafkaUserSpecOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecPtrOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthenticationOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthenticationPtrOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthenticationPasswordOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthenticationPasswordPtrOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthenticationPasswordValueFromOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthenticationPasswordValueFromPtrOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthenticationPasswordValueFromSecretKeyRefPtrOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthorizationOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthorizationPtrOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthorizationAclsOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthorizationAclsArrayOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecAuthorizationAclsResourceOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecQuotasOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecQuotasPtrOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecTemplateOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecTemplatePtrOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecTemplateSecretOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecTemplateSecretPtrOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecTemplateSecretMetadataOutput{})
+	pulumi.RegisterOutputType(KafkaUserSpecTemplateSecretMetadataPtrOutput{})
 	pulumi.RegisterOutputType(KafkaUserStatusOutput{})
 	pulumi.RegisterOutputType(KafkaUserStatusPtrOutput{})
 	pulumi.RegisterOutputType(KafkaUserStatusConditionsOutput{})

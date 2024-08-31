@@ -28,6 +28,9 @@ zalando_operator_release=v1.12.2
 #https://github.com/external-secrets/external-secrets/tree/v0.9.20
 external_secrets_release=v0.9.20
 
+#https://raw.githubusercontent.com/elastic/cloud-on-k8s/v2.14.0/deploy/eck-operator/charts/eck-operator-crds/templates/all-crds.yaml
+elastic_operator_release=v2.14.0
+
 .PHONY: clean
 clean:
 	rm -rf ${go_build_dir}
@@ -96,6 +99,12 @@ gen-external-secrets:
 	#https://github.com/pulumi/crd2pulumi/issues/89
 	mv pkg/kubernetes pkg/externalsecrets
 
+.PHONY: gen-elastic-operator
+gen-elastic-operator:
+	crd2pulumi --force --goPath=pkg/elasticsearch https://raw.githubusercontent.com/elastic/cloud-on-k8s/${elastic_operator_release}/deploy/eck-operator/charts/eck-operator-crds/templates/all-crds.yaml
+	#https://github.com/pulumi/crd2pulumi/issues/89
+	mv pkg/kubernetes pkg/elasticsearch
+
 .PHONY: go-deps
 go-deps:
 	go mod download
@@ -116,4 +125,4 @@ build-go: go-deps go-vet go-fmt
 build: clean gen build-go
 
 .PHONY: gen
-gen: clean gen-gateway-apis gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator gen-external-secrets
+gen: clean gen-gateway-apis gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator gen-external-secrets gen-elastic-operator
