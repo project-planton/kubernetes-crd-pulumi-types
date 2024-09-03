@@ -28,6 +28,9 @@ zalando_operator_release=v1.12.2
 #https://github.com/external-secrets/external-secrets/tree/v0.9.20
 external_secrets_release=v0.9.20
 
+#https://raw.githubusercontent.com/elastic/cloud-on-k8s/v2.14.0/deploy/eck-operator/charts/eck-operator-crds/templates/all-crds.yaml
+elastic_operator_release=v2.14.0
+
 #https://github.com/keycloak/keycloak-k8s-resources/tree/25.0.4/kubernetes
 keycloak_release=25.0.4
 
@@ -99,6 +102,12 @@ gen-external-secrets:
 	#https://github.com/pulumi/crd2pulumi/issues/89
 	mv pkg/kubernetes pkg/externalsecrets
 
+.PHONY: gen-elastic-operator
+gen-elastic-operator:
+	crd2pulumi --force --goPath=pkg/elasticsearch https://raw.githubusercontent.com/elastic/cloud-on-k8s/${elastic_operator_release}/deploy/eck-operator/charts/eck-operator-crds/templates/all-crds.yaml
+	#https://github.com/pulumi/crd2pulumi/issues/89
+	mv pkg/kubernetes pkg/elasticsearch
+
 #NOTE: currently the generated types for keycloak result in invalid "pulumi.MapMapMapInput" type.
 #created https://github.com/pulumi/crd2pulumi/issues/142 for tracking this issue.
 #this generate target is removed from build target as a result.
@@ -129,4 +138,4 @@ build-go: go-deps go-vet go-fmt
 build: clean gen build-go
 
 .PHONY: gen
-gen: clean gen-gateway-apis gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator gen-external-secrets
+gen: clean gen-gateway-apis gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator gen-external-secrets gen-elastic-operator
