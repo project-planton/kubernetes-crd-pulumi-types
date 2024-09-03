@@ -31,6 +31,9 @@ external_secrets_release=v0.9.20
 #https://raw.githubusercontent.com/elastic/cloud-on-k8s/v2.14.0/deploy/eck-operator/charts/eck-operator-crds/templates/all-crds.yaml
 elastic_operator_release=v2.14.0
 
+#https://github.com/keycloak/keycloak-k8s-resources/tree/25.0.4/kubernetes
+keycloak_release=25.0.4
+
 .PHONY: clean
 clean:
 	rm -rf ${go_build_dir}
@@ -87,9 +90,9 @@ gen-strimzi-operator:
 
 .PHONY: gen-zalando-operator
 gen-zalando-operator:
-	crd2pulumi --force --goPath=pkg/zalandooperator https://raw.githubusercontent.com/zalando/postgres-operator/v1.12.2/manifests/operatorconfiguration.crd.yaml \
-		https://raw.githubusercontent.com/zalando/postgres-operator/v1.12.2/manifests/postgresql.crd.yaml \
-		https://raw.githubusercontent.com/zalando/postgres-operator/v1.12.2/manifests/postgresteam.crd.yaml
+	crd2pulumi --force --goPath=pkg/zalandooperator https://raw.githubusercontent.com/zalando/postgres-operator/${zalando_operator_release}/manifests/operatorconfiguration.crd.yaml \
+		https://raw.githubusercontent.com/zalando/postgres-operator/${zalando_operator_release}/manifests/postgresql.crd.yaml \
+		https://raw.githubusercontent.com/zalando/postgres-operator/${zalando_operator_release}/manifests/postgresteam.crd.yaml
 	#https://github.com/pulumi/crd2pulumi/issues/89
 	mv pkg/kubernetes pkg/zalandooperator
 
@@ -104,6 +107,16 @@ gen-elastic-operator:
 	crd2pulumi --force --goPath=pkg/elasticsearch https://raw.githubusercontent.com/elastic/cloud-on-k8s/${elastic_operator_release}/deploy/eck-operator/charts/eck-operator-crds/templates/all-crds.yaml
 	#https://github.com/pulumi/crd2pulumi/issues/89
 	mv pkg/kubernetes pkg/elasticsearch
+
+#NOTE: currently the generated types for keycloak result in invalid "pulumi.MapMapMapInput" type.
+#created https://github.com/pulumi/crd2pulumi/issues/142 for tracking this issue.
+#this generate target is removed from build target as a result.
+.PHONY: gen-keycloak
+gen-keycloak:
+	crd2pulumi --force --goPath=pkg/keycloak https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/${keycloak_release}/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml \
+		https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/${keycloak_release}/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
+	#https://github.com/pulumi/crd2pulumi/issues/89
+	mv pkg/kubernetes pkg/keycloak
 
 .PHONY: go-deps
 go-deps:
