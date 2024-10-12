@@ -45,14 +45,10 @@ gen-gateway-apis:
 	https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/${gateway_apis}/config/crd/standard/gateway.networking.k8s.io_grpcroutes.yaml \
 	https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/${gateway_apis}/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml \
 	https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/${gateway_apis}/config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml
-	#https://github.com/pulumi/crd2pulumi/issues/89
-	mv pkg/kubernetes pkg/gatewayapis
 
 .PHONY: gen-istio
 gen-istio:
 	crd2pulumi --force --goPath=pkg/istio https://raw.githubusercontent.com/istio/istio/${istio_release}/manifests/charts/base/crds/crd-all.gen.yaml
-	#https://github.com/pulumi/crd2pulumi/issues/89
-	mv pkg/kubernetes pkg/istio
 
 .PHONY: gen-cert-manager
 gen-cert-manager:
@@ -62,14 +58,10 @@ gen-cert-manager:
 		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-clusterissuers.yaml \
 		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-issuers.yaml \
 		https://raw.githubusercontent.com/cert-manager/cert-manager/${cert_manager_release}/deploy/crds/crd-orders.yaml
-	#https://github.com/pulumi/crd2pulumi/issues/89
-	mv pkg/kubernetes pkg/certmanager
 
 .PHONY: gen-solr-operator
 gen-solr-operator:
 	crd2pulumi --force --goPath=pkg/solroperator https://raw.githubusercontent.com/apache/solr-operator/${solr_operator_release}/helm/solr-operator/crds/crds.yaml
-	#https://github.com/pulumi/crd2pulumi/issues/89
-	mv pkg/kubernetes pkg/solroperator
 
 .PHONY: gen-strimzi-operator
 gen-strimzi-operator:
@@ -84,39 +76,25 @@ gen-strimzi-operator:
 		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/048-Crd-kafkamirrormaker2.yaml\
 		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/049-Crd-kafkarebalance.yaml\
 		https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${strimzi_operator_release}/install/cluster-operator/04A-Crd-kafkanodepool.yaml
-	#https://github.com/pulumi/crd2pulumi/issues/89
-	mv pkg/kubernetes pkg/strimzioperator
-
 
 .PHONY: gen-zalando-operator
 gen-zalando-operator:
 	crd2pulumi --force --goPath=pkg/zalandooperator https://raw.githubusercontent.com/zalando/postgres-operator/${zalando_operator_release}/manifests/operatorconfiguration.crd.yaml \
 		https://raw.githubusercontent.com/zalando/postgres-operator/${zalando_operator_release}/manifests/postgresql.crd.yaml \
 		https://raw.githubusercontent.com/zalando/postgres-operator/${zalando_operator_release}/manifests/postgresteam.crd.yaml
-	#https://github.com/pulumi/crd2pulumi/issues/89
-	mv pkg/kubernetes pkg/zalandooperator
 
 .PHONY: gen-external-secrets
 gen-external-secrets:
 	crd2pulumi --force --goPath=pkg/externalsecrets https://raw.githubusercontent.com/external-secrets/external-secrets/${external_secrets_release}/deploy/crds/bundle.yaml
-	#https://github.com/pulumi/crd2pulumi/issues/89
-	mv pkg/kubernetes pkg/externalsecrets
 
 .PHONY: gen-elastic-operator
 gen-elastic-operator:
 	crd2pulumi --force --goPath=pkg/elasticsearch https://raw.githubusercontent.com/elastic/cloud-on-k8s/${elastic_operator_release}/deploy/eck-operator/charts/eck-operator-crds/templates/all-crds.yaml
-	#https://github.com/pulumi/crd2pulumi/issues/89
-	mv pkg/kubernetes pkg/elasticsearch
 
-#NOTE: currently the generated types for keycloak result in invalid "pulumi.MapMapMapInput" type.
-#created https://github.com/pulumi/crd2pulumi/issues/142 for tracking this issue.
-#this generate target is removed from build target as a result.
 .PHONY: gen-keycloak
 gen-keycloak:
 	crd2pulumi --force --goPath=pkg/keycloak https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/${keycloak_release}/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml \
 		https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/${keycloak_release}/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
-	#https://github.com/pulumi/crd2pulumi/issues/89
-	mv pkg/kubernetes pkg/keycloak
 
 .PHONY: go-deps
 go-deps:
@@ -138,4 +116,4 @@ build-go: go-deps go-vet go-fmt
 build: clean gen build-go
 
 .PHONY: gen
-gen: clean gen-gateway-apis gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator gen-external-secrets gen-elastic-operator
+gen: clean gen-gateway-apis gen-istio gen-cert-manager gen-solr-operator gen-strimzi-operator gen-zalando-operator gen-external-secrets gen-elastic-operator gen-keycloak

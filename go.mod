@@ -1,4 +1,4 @@
-module github.com/plantoncloud/kubernetes-crd-pulumi-types
+module github.com/project-planton/kubernetes-crd-pulumi-types
 
 go 1.23
 
